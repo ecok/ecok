@@ -16,7 +16,7 @@ features: [+toc, +number_sections, +sidenotes]
 
 
 <p><strong>警示：水平有限，以下内容均有可能存在错漏！</strong></p>
-<p><strong>如有发现，请下方留言或提交 <a href="https://github.com/pftz/pftz/content/post/2021-07-23-r-anova/index.Rmd">pull request</a>，感谢您的贡献！</strong></p>
+<p><strong>如有发现，请下方留言或提交 <a href="https://github.com/pftz/pftz/pulls">pull request</a>，感谢您的贡献！</strong></p>
 <blockquote>
 <p>仅供参考的示例；
 没有通用的模板。
@@ -25,7 +25,7 @@ features: [+toc, +number_sections, +sidenotes]
 </blockquote>
 <p>本分析以多物种、双因素为例，展示常用的方差分析的 R 实现。当然，通过少量的调整，也可以向下兼容：单物种、单因素；也可能向上兼容：三因素至多因素。例如，“三因素”可假想成“双因素中的一个因素再包含一双因素”，一些双因素的函数通过自我函数嵌套，可实现扩展。</p>
 <p>一个分析需求，常常对应着多种 R 实现，本示例列举了常用的几种。有些采用 R 中常用的批量（如循环、重复、分组等）计算方式，尽可能地避免使用大量重复代码；有些方法为了篇幅的简洁，仅以局部单一情况做演示，但是它们都可以用类似的方式实现批量计算，参照上下文自行调整即可。</p>
-<p>本示例原文档下载地址：<a href="https://github.com/pftz/pftz/content/post/2021-07-23-r-anova/" class="uri">https://github.com/pftz/pftz/content/post/2021-07-23-r-anova/</a></p>
+<p>本示例原文档下载地址：<a href="https://github.com/pftz/pftz/blob/master/content/post/2021-07-23-r-anova/index.Rmd" class="uri">https://github.com/pftz/pftz/blob/master/content/post/2021-07-23-r-anova/index.Rmd</a></p>
 <div id="示例数据" class="section level2">
 <h2>示例数据</h2>
 <ul>
@@ -871,7 +871,7 @@ cat_plot(lrm_b2mix_sp$AA, pred = drought, modx = fertilizer, geom = &quot;line&q
 <div id="物种内比较" class="section level5">
 <h5>物种内比较</h5>
 <p>多重比较：以 Tukey’s HSD 为例</p>
-<p>自定义函数下载地址：<a href="https://github.com/pftz/pftz/content/post/2021-07-23-r-anova/fun_mulcomp_tukey.R" class="uri">https://github.com/pftz/pftz/content/post/2021-07-23-r-anova/fun_mulcomp_tukey.R</a></p>
+<p>自定义函数下载地址：<a href="https://github.com/pftz/pftz/blob/master/content/post/2021-07-23-r-anova/fun_mulcomp_tukey.R" class="uri">https://github.com/pftz/pftz/blob/master/content/post/2021-07-23-r-anova/fun_mulcomp_tukey.R</a></p>
 <pre class="r"><code># HSD
 # 加载自定义的函数，用于双因素内所有水平的多重比较
 source(&#39;fun_mulcomp_tukey.R&#39;, encoding = &#39;UTF-8&#39;)
@@ -1116,7 +1116,7 @@ comp_hsd_b2fert_sp_spp &lt;- fun_mulcomp_res(
 
 # library(ggpubr)
 comp_hsd_b2fert_spp$groups2 &lt;- with(comp_hsd_b2fert_spp, ifelse(
-    fertilizer == &quot;D50&quot;,
+    iGroup == &quot;D50&quot;,
     as.character(toupper(groups)),
     as.character(groups)))
 

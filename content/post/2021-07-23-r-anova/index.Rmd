@@ -22,7 +22,7 @@ knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE,
 
 **警示：水平有限，以下内容均有可能存在错漏！**
 
-**如有发现，请下方留言或提交 [pull request](https://github.com/pftz/pftz/content/post/2021-07-23-r-anova/index.Rmd)，感谢您的贡献！**
+**如有发现，请下方留言或提交 [pull request](https://github.com/pftz/pftz/pulls)，感谢您的贡献！**
 
 > 仅供参考的示例；
 > 没有通用的模板。
@@ -33,7 +33,7 @@ knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE,
 
 一个分析需求，常常对应着多种 R 实现，本示例列举了常用的几种。有些采用 R 中常用的批量（如循环、重复、分组等）计算方式，尽可能地避免使用大量重复代码；有些方法为了篇幅的简洁，仅以局部单一情况做演示，但是它们都可以用类似的方式实现批量计算，参照上下文自行调整即可。
 
-本示例原文档下载地址：<https://github.com/pftz/pftz/content/post/2021-07-23-r-anova/>
+本示例原文档下载地址：<https://github.com/pftz/pftz/blob/master/content/post/2021-07-23-r-anova/index.Rmd>
 
 ## 示例数据
 
@@ -461,7 +461,7 @@ cat_plot(lrm_b2mix_sp$AA, pred = drought, modx = fertilizer, geom = "line")
 
 多重比较：以 Tukey’s HSD 为例
 
-自定义函数下载地址：<https://github.com/pftz/pftz/content/post/2021-07-23-r-anova/fun_mulcomp_tukey.R>
+自定义函数下载地址：<https://github.com/pftz/pftz/blob/master/content/post/2021-07-23-r-anova/fun_mulcomp_tukey.R>
 
 ```{r}
 # HSD
@@ -716,7 +716,7 @@ pbar_comp_biomass_spp <-
 
 # library(ggpubr)
 comp_hsd_b2fert_spp$groups2 <- with(comp_hsd_b2fert_spp, ifelse(
-    fertilizer == "D50",
+    iGroup == "D50",
     as.character(toupper(groups)),
     as.character(groups)))
 
