@@ -1,0 +1,854 @@
+---
+title: "R 方差分析：以多物种、双因素为例"
+author: "sanchufy"
+date: '2021-07-29'
+slug: r-anova
+toc-title: "目录"
+description: 本分析以多物种、双因素为例，展示常用的方差分析的 R 实现。
+tags:
+  - 方差分析
+categories:
+  - R
+  - 统计
+features: [+toc, +number_sections, +sidenotes]
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE,
+    fig.retina = 2, 
+    dev = if (xfun::loadable('svglite')) 'svglite' else 'svg')
+```
+
+
+**警示：水平有限，以下内容均有可能存在错漏！**
+
+**如有发现，请下方留言或提交 [pull request](https://github.com/pftz/pftz/content/post/2021-07-23-r-anova/index.Rmd)，感谢您的贡献！**
+
+> 仅供参考的示例；
+> 没有通用的模板。
+> 了解统计更重要；
+> 照搬后果请自负。
+
+本分析以多物种、双因素为例，展示常用的方差分析的 R 实现。当然，通过少量的调整，也可以向下兼容：单物种、单因素；也可能向上兼容：三因素至多因素。例如，“三因素”可假想成“双因素中的一个因素再包含一双因素”，一些双因素的函数通过自我函数嵌套，可实现扩展。
+
+一个分析需求，常常对应着多种 R 实现，本示例列举了常用的几种。有些采用 R 中常用的批量（如循环、重复、分组等）计算方式，尽可能地避免使用大量重复代码；有些方法为了篇幅的简洁，仅以局部单一情况做演示，但是它们都可以用类似的方式实现批量计算，参照上下文自行调整即可。
+
+本示例原文档下载地址：<https://github.com/pftz/pftz/content/post/2021-07-23-r-anova/>
+
+## 示例数据
+
+- x，自变量，解释变量，预测变量，独立变量，IV (Independent variables)
+- y，因变量，响应变量，结果变量，依赖变量，DV (Dependent variables)
+
+1. 构建示例用数据
+
+```{r}
+# 构建一个伪造的示例数据框
+set.seed(110)
+
+df <- data.frame(
+    drought = rep(c("D25", "D50", "D75"), each = 20, times = 2),
+    fertilizer = rep(c("CK", "NPK"), each = 60),
+    species = rep(c("AA", "BB", "CC", "DD"), each = 5, times = 6),
+    biomass = sort(rnorm(120, mean = 0.8, sd = 0.2)),
+    height =sort(rnorm(120, mean = 22.2, sd = 7.1)))
+
+# 人为打乱一些数据
+for(i in 1:(120/40)){
+    k <- 1 + 40*(i-1)
+    set.seed(110)
+    df$biomass[(k+9):(k+29)] <- sample(df$biomass[(k+9):(k+29)])
+}
+df$biomass <- df$biomass[c(21:60, 101:120, 1:20, 61:100)]
+
+# 清除环境中的临时变量
+rm(list = c("i", "k"))
+```
+
+2. 查看数据
+
+```{r}
+# 将多列转换为因子型变量
+# col_factor <- c("drought", "fertilizer", "species")
+# df[, col_factor] <- lapply(df[, col_factor], factor)
+
+# 计数或四分位数、平均值
+summary(df)
+
+# 列联表
+# table(df[, -which(names(df) %in% c("biomass", "height"))])
+# xtabs(biomass ~ drought + fertilizer + species, data = df)
+```
+
+
+这是一个伪造的数据集，共 5 个变量。1 个分组（4 个物种），2 个处理，每组处理 5 个重复，共 3 × 2 × 4 × 5 = 120 个观测：
+
+- **drought** **干旱**处理：分类变量，3 水平
+    - 正常浇水量的百分比，如`75%` (28 ml)、`50%` (20 ml)、`25%` (12 ml)
+- **fertilizer** **施肥**处理：分类变量，2 水平
+- **species** **物种**：分类变量，4 水平
+- **biomass** **生物量**：连续变量
+- **height** **高度**：连续变量
+
+
+## 描述性分析（简略版）
+
+先了解你的数据。
+
+```{r}
+# 不区分物种
+# ----------
+# 箱线图
+boxplot(biomass ~ drought + fertilizer, data = df)
+```
+
+
+```{r}
+# 以物种进行分组
+# --------------
+library(lattice)
+# 散点 + 连线
+xyplot(biomass ~ drought | fertilizer, 
+       groups = species, data = df, 
+       type='b', auto.key = list(columns = 4),
+       scales=list(alternating=FALSE))
+
+# 直方图
+library(ggplot2)
+ggplot(df, aes(x = biomass)) + 
+    geom_histogram(bins = 30) + 
+    facet_wrap(~ species, ncol = 2) + 
+    theme_bw()
+
+# 箱线图
+ggplot(df, aes(x = drought, y = biomass, 
+               fill = fertilizer)) +
+    geom_boxplot() +
+    facet_wrap(~species, scale="free")
+
+# 条形图/柱状图
+# -------------
+# 计算平均值和标准误
+bygroup_mean <- aggregate(
+    cbind(biomass, height) ~ drought + fertilizer + species, df,
+    function(x) cbind(mean(x), sd(x)))
+bygroup_mean <- do.call(data.frame, bygroup_mean)
+names(bygroup_mean) <- gsub(".1", "", 
+    names(bygroup_mean), fixed = T)
+names(bygroup_mean) <- gsub(".2", "_sd",
+    names(bygroup_mean), fixed = T)
+
+# 分面作图
+ggplot(bygroup_mean, aes(x = drought, y = biomass, 
+               fill = fertilizer)) +
+    geom_col(position = "dodge", color = "black") +
+    geom_errorbar(aes(ymin = biomass, 
+                      ymax = biomass + biomass_sd),
+                  width=.2,
+                 position=position_dodge(.9)) +
+    facet_wrap(~species, scale="free")
+```
+
+
+## 方差分析
+
+一般流程:
+
+1. 分析：
+    - 是否有协变量？
+    - 是否存在交互作用？
+2. 假设检验：独立、正态、等方差
+3. 多重比较
+4. 作图
+
+
+### 单因素
+
+如果实验仅关注一个处理，其它条件均相同，分析不同干旱处理对生物量的影响。
+
+```{r}
+# 提取某个处理单独的数据（用于示例）
+df_aa_npk <- subset(df, species == "AA" & fertilizer == "NPK")
+```
+
+
+```{r}
+# 方法一：stats::aov
+aov_b1dry <- aov(biomass ~ drought, data = df_aa_npk)
+
+summary(aov_b1dry)
+```
+
+
+```{r}
+# 方法二：回归方法
+# 默认第一个水平（fertilizer: Control）为参照
+levels(df_aa_npk$drought)
+
+lm_b1dry <- lm(biomass ~ drought, data = df_aa_npk)
+# summary(lm_b1fert)
+anova(lm_b1dry)
+```
+
+
+```{r}
+# 方法三：car::Anova
+library(car)
+Anova(lm_b1dry)
+```
+
+
+#### 手算方差分析平方和（番外）
+
+组间平方和  
+Sum of Squares due to Treatment (SSTR)  
+the treatment sum of squares  
+the sum of squares for treatments
+
+$$
+\begin{align}
+SSTR & = \sum_{i=1}^k\sum_{j=1}^n(\bar x_i-\bar x')^2 \\
+& = \Sigma_{i=1}^kn_i(\bar x_i-\bar x')^2 \\
+& = \sum_{i}n_i(\overline{Y}_i-\overline{Y}_{total})^2
+\end{align}
+$$
+
+组内平方和  
+the Sum of Squares due to Error (SSE)  
+the error sum of squares  
+the sum of squares of the residual error
+
+$$
+\begin{align}
+SSE & = \sum_{i=1}^k\sum_{j=1}^n(x_ij-\bar x_i)^2 \\ 
+    & = \sum_{i}\sum_{j}(Y_{ij}-\overline{Y}_i)^2
+\end{align}
+$$
+
+
+```{r}
+#- 组间平方和 within groups，处理误差
+# 5 个重复
+sum((tapply(df_aa_npk$biomass, df_aa_npk$drought, mean) - mean(df_aa_npk$biomass))^2)*5
+
+#- 组内平方和 between groups，随机误差
+# 4 个物种
+sum((tapply(df_aa_npk$biomass,df_aa_npk$drought,var)))*4
+```
+
+
+### 多因素
+
+本示例为重复试验、非重复测量。
+
+1. 分析不同物种、不同种植密度、不同施肥处理对产量的影响，即把物种也视为一种处理（不推荐）：
+
+```{r, eval=F}
+# 不含交互项
+aov_b2main <- aov(
+    biomass ~ drought + fertilizer + species, 
+    data = df)
+
+# 含交互项
+# 方法一
+aov_b2mix <- aov(
+    biomass ~ species + drought*fertilizer, 
+    data = df)
+
+summary(aov_b2mix)
+```
+
+
+使用回归进行 ANOVA 分析，结果可等同。
+
+```{r, eval=F}
+# 方法二
+lrm_b2mix <- lm(
+    biomass ~ species + drought*fertilizer, 
+    data = df)
+# summary(fit_2inter_lm)
+anova(lrm_b2mix)
+```
+
+
+```{r, eval=F}
+# 方法三
+# library(car)
+Anova(lrm_b2mix)
+```
+
+
+2. 分析各物种，不同种植密度、不同施肥处理对产量的影响（推荐）：
+
+```{r}
+# 方法一
+lrm_b2mix_sp <- with(df, 
+    by(df, species, 
+        function (d) lm(biomass ~ drought*fertilizer, data = d)))
+
+ano_b2mix_sp <- lapply(lrm_b2mix_sp, anova)
+```
+
+
+```{r}
+# 将方法一输出为整洁的结果
+# 方法 A
+library(broom)
+ano_b2mix_sp_res <- lapply(
+    ano_b2mix_sp, 
+    function(f) broom::tidy(f))
+
+ano_b2mix_sp_res <- Map(
+    function(x, y) cbind("species" = rep(y, nrow(x)), x), 
+    ano_b2mix_sp_res, 
+    names(ano_b2mix_sp_res))
+
+ano_b2mix_sp_resDF <- do.call(rbind, ano_b2mix_sp_res)
+row.names(ano_b2mix_sp_resDF) <- NULL
+
+knitr::kable(ano_b2mix_sp_resDF)
+
+library(pander)
+pander(ano_b2mix_sp_resDF)
+```
+
+
+```{r}
+# 方法 B
+library(stargazer)
+stargazer(ano_b2mix_sp_res,
+    type = "text",
+    title = "Analysis of variance of Biomass",
+    digits = 3)
+```
+
+
+```{r, eval=F}
+# 导出结果
+# 方法 A
+write.csv(ano_b2mix_sp_resdf, 
+          file = "output/Biomass-anova-results.csv", 
+          fileEncoding = "utf-8")
+# 方法 B
+stargazer(ano_b2mix_sp_res,
+    type = "html",
+    title = "Analysis of variance of Biomass",
+    digits = 3,
+    out = "output/Biomass-anova-results.html")
+```
+
+
+```{r}
+# 方法二
+library(nlme)
+# library(lme4)
+
+lme_b2mix_sp <- lmList(
+    biomass ~ drought*fertilizer | species, 
+    data = df)
+
+lapply(lme_b2mix_sp, anova)
+```
+
+
+```{r}
+# 方法三
+library(plyr)
+lrm_b2mix_sp_ply <- dlply(df, "species", 
+      function(d) lm(biomass ~ drought*fertilizer, data = d))
+```
+
+另参考：
+
+- [Linear Regression and group by in R](https://stackoverflow.com/q/1169539)
+- [Fitting linear model / ANOVA by group](https://stackoverflow.com/a/39769703)
+
+
+#### 交互作用
+
+
+```{r}
+# 方法一
+# plot.new()
+par(mfrow = c(2, 2))
+with(df, by(df, species, function (d){
+    # 设定图的宽、长
+    # par(pin = c(2,1));
+    with(d, 
+        interaction.plot(drought, fertilizer, biomass,
+        type = "b",
+        col = c("red", "blue"),
+        pch = c(1, 16),
+        main = "Interaction between drought and fertilizer"))}))
+```
+
+
+```{r}
+# 方法二
+library(gplots)
+# plot.new()
+par(mfrow = c(2, 2))
+by(df, df$species, function (d){
+    plotmeans(biomass ~ interaction(fertilizer, drought, sep = ":"),
+    data = d,
+    connect = list(c(1, 3, 5), c(2, 4, 6)),
+    col = c("red", "blue"),
+    main = "Interaction Plot with 95% CIs",
+    xlab = "drought:Fertilizer")})
+```
+
+
+以下仅以一个物种示例：
+
+```{r}
+# 方法三
+df_aa <- subset(df, species == "AA")
+
+library(HH)
+interaction2wt(biomass ~ drought*fertilizer, data = df_aa)
+```
+
+
+```{r}
+# 方法四
+library(agricolae)
+D_vs_F_aa <- with(df_aa, interaction(drought, fertilizer, sep = ":"))
+aov_b2inter_aa <- aov(biomass ~ D_vs_F_aa, data = df_aa)
+
+hsd_b2inter_aa <- HSD.test(aov_b2inter_aa, "D_vs_F_aa", 
+    group = TRUE, console = TRUE)
+
+bar.group(hsd_b2inter_aa$groups, 
+    ylim = c(0, 1.1),
+    # density = 6,
+    border = "black")
+```
+
+
+```{r}
+# 方法五
+library(interactions)
+cat_plot(lrm_b2mix_sp$AA, pred = drought, modx = fertilizer, geom = "line")
+```
+
+
+将多张图画在一起，还可以使用 `for` 循环，结合 `par(mfrow=c(), mar = c())` 等实现，使用 `par(new = TRUE)` 还可以叠加图层。这样做的另一个好处是，可以为不同的小图设定各自的样式，实现更灵活的自定义。
+
+
+#### 多重比较
+
+- LSD, Fisher's LSD (Least Significant Difference) 最小显著差异法 （如果未使用经调整的 p 值，则不推荐）
+- Tukey’s HSD, Tukey’s Honest Significant Difference （推荐）
+    - `HSD.test()`
+- Bonferroni （推荐）
+- Dunn-Šidák (Šidák)
+- Duncan's LSR (least significant range)
+- Duncan’s Multiple Range Test (DMRT) （不推荐）
+- Duncan's new multiple range test
+    - `duncan.test()`
+- SNK (Q 法), Student-Newman-Keuls （不推荐）
+    - `SNK.test()`
+- Scheffe (S 法), Scheffé’s S
+    - `scheffe.test()`
+
+另参考：
+
+- Lee S, Lee DK. What is the proper way to apply the multiple comparison test? Korean J Anesthesiol. 2008,71(5): 353–360. doi: [10.4097/kja.d.18.00242](https://dx.doi.org/10.4097%2Fkja.d.18.00242)
+- Midway S, et al. Comparing multiple comparisons: practical guidance for choosing the best multiple comparisons test. PeerJ. 2020,8:e10387. doi: [10.7717/peerj.10387](https://doi.org/10.7717/peerj.10387)
+
+
+##### 物种内比较
+
+多重比较：以 Tukey’s HSD 为例
+
+自定义函数下载地址：<https://github.com/pftz/pftz/content/post/2021-07-23-r-anova/fun_mulcomp_tukey.R>
+
+```{r}
+# HSD
+# 加载自定义的函数，用于双因素内所有水平的多重比较
+source('fun_mulcomp_tukey.R', encoding = 'UTF-8')
+
+# 干旱内施肥多重比较、施肥内干旱多重比较
+comp_hsd_b2in_DIY <- by(df, df$species, 
+    function(d) fun_mulcomp_hsd2(
+        y = "biomass", 
+        data = d, 
+        trts = c("drought", "fertilizer")))
+
+# 干旱内施肥的比较结果
+comp_hsd_b2in_dry <- fun_mulcomp_res(
+    comp_hsd_b2in_DIY,
+    treats = "drought",
+    groups = "species")
+
+# 施肥内干旱的比较结果
+comp_hsd_b2in_fert <- fun_mulcomp_res(
+    comp_hsd_b2in_DIY,
+    treats = "fertilizer",
+    groups = "species")
+```
+
+
+```{r}
+# library(ggplot2)
+# 箱线图
+pbox_comp_biomass <- ggplot(data = df, aes(x = drought, y = biomass)) +
+    geom_boxplot(aes(fill = fertilizer)) +
+    theme_bw() + 
+    theme(panel.grid.minor = element_blank()) +
+    facet_wrap(~species, scale="free")
+
+# 方式一（字母版）
+pbox_comp_biomass + 
+    geom_text(
+        data = comp_hsd_b2in_dry,
+        aes(x = iGroup, y = biomass + std + 0.15, 
+            label = groups, group = treat), 
+        position = position_dodge(width = 0.9))
+
+# 方式二（星号版）
+library(ggpubr)
+pbox_comp_biomass + 
+    ylim(0.2, 1.3) +
+    stat_compare_means(
+        aes(group = fertilizer),
+        method = "anova",
+        # method = "t.test",
+        # paired = TRUE,
+        label = "p.signif",
+        symnum.args = list(cutpoints = c(0, 0.001, 0.01, 0.05, 1), 
+                           symbols = c("***", "**", "*", "ns")),
+        label.y = 1.2)
+```
+
+
+```{r}
+# 条形图
+# (1) 基本图
+pbar_comp_biomass <- 
+    ggplot(data = comp_hsd_b2in_dry, 
+        aes(x = iGroup, y = biomass, fill = treat)) +
+    xlab("Drought") +
+    ylab("Biomass") +
+    geom_bar(position="dodge", stat = "identity", color = "black") +
+    facet_wrap(~species, scale="free") +
+    geom_errorbar(
+        aes(ymin = biomass, ymax = biomass + std),
+        width=.2,
+        position = position_dodge(.9)) +
+    scale_fill_manual(values = c("grey", "black")) +
+    theme_bw() +
+    theme(panel.grid = element_blank())
+    # geom_text(
+    #     aes(x = iGroup, y = biomass + std + 0.15, 
+    #         label = groups, group = treat), 
+    #     position = position_dodge(width = 0.9))
+
+# (2.1) 方法一：字母 + 星号
+# library(ggpubr)
+
+comp_hsd_b2in_fert$groups2 <- with(comp_hsd_b2in_fert, ifelse(
+    iGroup == "CK",
+    as.character(toupper(groups)),
+    as.character(groups)))
+
+pbar_comp_biomass +
+    geom_text(
+        data = comp_hsd_b2in_fert,
+        aes(x = treat, y = biomass + std + 0.15,
+            label = groups2, group = iGroup),
+        position = position_dodge(0.9),
+        inherit.aes = FALSE,
+        show.legend = FALSE) +
+        ylim(0, 1.5) +
+    stat_compare_means(
+        data = df, aes(x = drought, y = biomass, group = fertilizer),
+        # comparisons = list(c("CK", "NPK")),
+        method = "anova",
+        label = "p.signif",
+        symnum.args = list(cutpoints = c(0, 0.001, 0.01, 0.05, 1), 
+                           symbols = c("***", "**", "*", "ns")),
+        label.y = 1.4,
+        inherit.aes = FALSE,
+        show.legend = FALSE)
+
+
+# (2.2) 方法二：大、小写字母
+comp_hsd_b2in_2f <- base::merge(
+    comp_hsd_b2in_dry,
+    comp_hsd_b2in_fert, 
+    by.x = c("species", "biomass", "std", "iGroup", "treat"),
+    by.y = c("species", "biomass", "std", "treat", "iGroup"),
+    all = TRUE,
+    sort = FALSE)
+
+comp_hsd_b2in_2f$groups <- paste0(
+    toupper(comp_hsd_b2in_2f$groups.x),
+    comp_hsd_b2in_2f$groups.y)
+
+pbar_comp_biomass + 
+    geom_text(
+        data = comp_hsd_b2in_2f,
+        aes(x = iGroup, y = biomass + std + 0.15,
+            label = groups, group = treat),
+        position = position_dodge(width = 0.9),
+        inherit.aes = FALSE,
+        show.legend = FALSE)
+```
+
+
+使用其它 R 函数：
+
+Estimated marginal means (EMMs) 估计的边际平均值
+
+> Estimated marginal means (EMMs) are defined as equally weighted means of these predictions at specified margins
+
+```{r}
+# 分组成对比较
+
+library(emmeans)
+# library(lsmeans)
+
+# Tukey-adjusted P value
+# (1) Within group comparisons
+comp_emm_b2in_within <- lapply(
+    lrm_b2mix_sp, 
+    function(m) emmeans(m,  ~ drought | fertilizer))
+
+comp_emm_b2in_pairs <- lapply(comp_emm_b2in_within, pairs)
+
+# Pairwise P-value plots
+# pwpp(comp_emm_b2in_within$AA)
+
+emmip(comp_emm_b2in_within$AA, ~ drought | fertilizer, CIs = TRUE)
+plot(comp_emm_b2in_within$AA, by = "fertilizer", comparisons = TRUE)
+
+# (2) All pairwise comparisons
+comp_emm_b2in_pairwise <- lapply(
+    lrm_b2mix_sp, 
+    function(m) emmeans(m, pairwise ~ drought:fertilizer))
+```
+
+
+另参考：
+
+- [Basics of estimated marginal means](https://cran.r-project.org/web/packages/emmeans/vignettes/basics.html)
+- [Comparisons and contrasts in emmeans](https://cran.r-project.org/web/packages/emmeans/vignettes/comparisons.html)
+- [Getting started with emmeans](https://aosmith.rbind.io/2019/03/25/getting-started-with-emmeans/)
+
+
+```{r}
+# 仅以一个物种、一个处理示例
+
+# Tukey
+# 方法一
+# detach("package:HH", unload = TRUE)
+
+comp_tukey_b1dry_hsd <- TukeyHSD(aov_b1dry)
+
+par(mar = c(5, 5, 3, 1), las = 1)
+plot(comp_tukey_b1dry_hsd)
+
+# 方法二：功能更强大
+library(multcomp)
+comp_tukey_b1dry_glht <- glht(
+    aov_b1dry, 
+    linfct = mcp(drought = "Tukey"))
+
+# 简单版结果
+summary(comp_tukey_b1dry_glht)
+
+# 字母版结果
+tkcld_b1dry <- cld(comp_tukey_b1dry_glht, level = 0.05)
+
+par(mai=c(1,1,1.5,1))
+plot(tkcld_b1dry, col = "lightgrey")
+```
+
+
+##### 物种间比较
+
+多重比较：以 Tukey’s HSD 为例
+
+```{r}
+# 以施肥作为分组
+
+# 物种内干旱多重比较、干旱内物种多重比较
+comp_hsd_b2fert_DIY <- by(df, df$fertilizer, 
+    function(d) fun_mulcomp_hsd2(
+        y = "biomass", 
+        data = d, 
+        trts = c("species", "drought")))
+
+# 干旱内物种的比较结果
+comp_hsd_b2fert_spp <- fun_mulcomp_res(
+    comp_hsd_b2fert_DIY,
+    treats = "drought",
+    groups = "fertilizer")
+
+# 干旱内物种直接比差异
+comp_hsd_b2fert_sp_DIY <- by(df, df$fertilizer, 
+    function(d) fun_mulcomp_hsd(
+        biomass ~ species,
+        data = d))
+
+comp_hsd_b2fert_sp_spp <- fun_mulcomp_res(
+    comp_hsd_b2fert_sp_DIY,
+    groups = "fertilizer")
+```
+
+
+```{r}
+pbar_comp_biomass_spp <- 
+    ggplot(data = comp_hsd_b2fert_spp, 
+        aes(x = treat, y = biomass, fill = iGroup)) +
+    xlab("Drought") +
+    ylab("Biomass") +
+    geom_bar(position="dodge", stat = "identity", color = "black") +
+    facet_wrap(~fertilizer, scale="free") +
+    geom_errorbar(
+        aes(ymin = biomass, ymax = biomass + std),
+        width=.2,
+        position = position_dodge(.9)) +
+    scale_fill_manual(values = c("white", "grey", "black")) +
+    theme_bw() +
+    theme(panel.grid = element_blank())
+
+# library(ggpubr)
+comp_hsd_b2fert_spp$groups2 <- with(comp_hsd_b2fert_spp, ifelse(
+    fertilizer == "D50",
+    as.character(toupper(groups)),
+    as.character(groups)))
+
+# 添加字母：物种间干旱比较
+pbar_comp_biomass_spp2 <- pbar_comp_biomass_spp +
+    geom_text(
+        data = comp_hsd_b2fert_spp,
+        aes(x = treat, y = biomass + std + 0.06,
+            label = groups2, group = iGroup),
+        position = position_dodge(0.9),
+        inherit.aes = FALSE,
+        show.legend = FALSE) +
+        ylim(0, 1.35)
+
+# 添加字母：物种直接比较
+# detach("package:ggpubr", unload = TRUE)
+library(ggsignif)
+
+pbar_comp_biomass_spp2 +
+    geom_signif(
+      stat="identity",
+      data = comp_hsd_b2fert_sp_spp,
+      aes(x = as.numeric(treat) - 0.4, y = 1.29, 
+          xend = as.numeric(treat) + 0.4,
+          yend = 1.29,
+          annotation = groups,
+          group = treat),
+      inherit.aes = FALSE)
+```
+
+
+#### 假设检验
+
+对于所有因素（分类处理变量）的每一水平的处理组合，即所有因素水平的每一个配对下，假设观测值（响应变量 y）的概率分布：
+
+1. 近似正态分布；
+2. 方差恒定且相等。
+
+> 1. The population probability distribution of the observations for any factor–level combination is approximately normal.
+> 2. The variance of the probability distribution is constant and the same for all factor–level combinations.
+
+> 如果因素水平的每一个配对下的数据量都足够大的话，建议对每一个子总体的正态性和同方差性都做一个验证。
+> 当假设明显不满足时，考虑数据变换或非参数方法。
+
+另可参看维基百科：https://en.wikipedia.org/wiki/Analysis_of_variance#Assumptions
+
+假设检验方法：
+
+1. 检验（每个处理组合响应变量 y 或线性模型的残差的）正态性
+    - Q-Q 图
+    - Shapiro–Wilk test，如样本量 < 2000 时
+    - Anderson–Darling test
+    - Kolmogorov–Smirnov test，如样本量 > 2000 时
+2. 检验方差齐性
+    - Bartlett test
+    - Fligner-Killeen test
+    - Brown-Forsythe test
+    - Levene’s test
+
+
+```{r}
+# 残差分析
+par(mfrow = c(2, 2))
+plot(lrm_b2mix_sp$AA)
+
+# 使用隐式循环批量作图
+par(mfrow = c(4, 4))
+lapply(lrm_b2mix_sp, plot)
+```
+
+
+```{r}
+# 实际值（观测值）与拟合值（预测值）
+par(mfrow=c(1,1))
+plot(lrm_b2mix_sp$AA$fitted.values ~ lrm_b2mix_sp$AA$model$biomass)
+```
+
+
+```{r, eval=F}
+# Q-Q 图
+qqplot()
+
+# library(car)
+qqPlot(lrm_b2mix_sp$AA$residuals, main = "QQ Plot")
+
+lapply(lrm_b2mix_sp, function(x) shapiro.test(resid(x)))
+```
+
+
+```{r, eval=F}
+# 方差齐性
+with(df, by(df, species, function(d) bartlett.test(biomass ~ interaction(drought, fertilizer), d)))
+
+# library(car)
+# 'levene.test()' is defunct.
+with(df, by(df, species, function(d) leveneTest(biomass ~ drought*fertilizer, d)))
+
+fligner.test()
+
+HH::hov()
+```
+
+
+```{r}
+# 离群点/异常值
+car::outlierTest(lrm_b2mix_sp$AA)
+```
+
+
+----
+
+## 待办
+
+- 增补/删减内容，使其更完整且专注既定主题
+- 添加方法的利弊比较，以及用于选择的经验法则
+- 增加多个因变量的分析，以及为不同因变量进行批量分析的 R 实现
+- 提取主线，单独打包成自定义函数
+- 优化作图，更符合出版格式
+
+## 贡献
+
+- 在本页面下方（Issues）评论/提问/回答
+- 修改或补充内容，包括 R 语句、错别字等，可提交 pull request
+
+## 参考
+
+- R语言实战 R in Action
+- 赖江山 R 课, 广州, 2018.
+- de Micheaux PL, et al. 潘东东, 等译. R 软件教程与统计分析：入门到精通. 2015. 北京：高等教育出版社.
+- William M. Mendenhall, Terry L. Sincich, Nancy S. Boudreau. 2017. *Statistics for engineering and the sciences*. Chapman and Hall, CRC.
+- [UCLA: Data analysis examples](https://stats.idre.ucla.edu/other/dae/)
+- [*Applied Statistics with R*: Chapter 12 Analysis of Variance](https://daviddalpiaz.github.io/appliedstats/analysis-of-variance.html#two-way-anova)
+- [ANOVA in R: A step-by-step guide](https://www.scribbr.com/statistics/anova-in-r/)
+
+

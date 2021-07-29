@@ -1,0 +1,65 @@
+baseurl: "/"
+languageCode: "zh-cn"
+# defaultContentLanguage: "en"
+defaultContentLanguage: "zh"
+title: "有油"
+theme: "hugo-prose"
+googleAnalytics: ""
+disqusShortname: ""
+ignoreFiles: ["\\.Rmd$", "\\.Rmarkdown$", "_cache$", "\\.knit\\.md$", "\\.utf8\\.md$"]
+footnotereturnlinkcontents: "↩"
+paginate: 2
+# publishdir: "public"
+
+permalinks:
+  post: "/post/:year/:month/:day/:slug/"
+
+outputs:
+  home: [html, rss, json]
+
+# some menu items were added via the `menu` option in YAML in posts
+menu:
+  header:
+    - name: 搜索
+      url: "#"
+      identifier: menu-search
+    - name: 订阅
+      url: "index.xml"
+  footer:
+    - name: 分类
+      url: "/categories/"
+      weight: 2
+      pre: "optional"
+    - name: 标签
+      url: "/tags/"
+      weight: 3
+      pre: "optional"
+    - name: 编辑
+      url: "#"
+      weight: 4
+      identifier: "menu-edit"
+    - name: 顶部
+      url: "#"
+
+params:
+  homePosts: 10
+  mainSections: ["post"]
+  editLink: "https://github.com/pftz/pftz/edit/master/content/"
+  authorDelimiter: ", "
+  pageFeatures: [+sidenotes]
+  description: >
+    PFTZ 有油分享.
+  footer: >
+    &copy; PFTZ (2021 - 2021)
+#  license: >
+#    Text and figures are licensed under [Creative Commons Attribution CC BY
+#    4.0](https://creativecommons.org/licenses/by/4.0/). The source code is
+#    licensed under MIT. The full source is available at
+#    https://github.com/yihui/hugo-prose.
+
+markup:
+  highlight:
+    codeFences: false
+  goldmark:
+    renderer:
+      unsafe: true
