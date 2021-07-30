@@ -1,11 +1,8 @@
+[![Netlify Status](https://api.netlify.com/api/v1/badges/3e6b37e8-b62d-4f26-a505-d6ebf262cad8/deploy-status)](https://app.netlify.com/sites/pftz/deploys)
 
-本站使用 blogdown 建立
+PFTZ | 有油 - 笔记汇总
 
-- 来源：[cosname/cosx](https://github.com/cosname/cosx.org)
-- 主题：[yihui/hugo-prose](https://github.com/yihui/hugo-prose)
-
-
-分享：
+## 内容
 
 - 文献
 - 笔记

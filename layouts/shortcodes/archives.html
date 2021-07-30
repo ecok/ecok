@@ -1,0 +1,11 @@
+{{ range (where .Site.RegularPages "Section" "!=" "").GroupByDate "2006" }}
+<h2 class="archive-title">{{ .Key }}</h2>
+<ul>
+  {{ range sort .Pages "Date" "desc" }}
+  <li>
+  {{ if .Date }}<span class="date">{{ .Date.Format "2006/01/02" }}</span>{{ end }}
+  <a href="{{ .RelPermalink }}">{{ .Title }}</a>
+</li>
+{{ end }}
+</ul>
+{{ end }}
