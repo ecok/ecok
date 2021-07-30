@@ -19,7 +19,7 @@ jobs:
       - name: Install rmarkdown and blogdown
         run: Rscript -e 'install.packages(c("rmarkdown","blogdown"))'
       - name: Install Hugo
-        run: Rscript -e 'blogdown::install_hugo("0.80.0", extended=TRUE, force=TRUE)'
+        run: Rscript -e 'blogdown::install_hugo("0.84.0")'
       - name: Build website
         run: Rscript -e 'blogdown::build_site()'
       - name: Deploy to gh-pages
