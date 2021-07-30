@@ -1,0 +1,30 @@
+on:
+  push:
+     branches:
+       - master
+  pull_request:
+    branches:
+      - main
+      - master
+
+name: deploy website
+
+jobs:
+  blogdown:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: r-lib/actions/setup-r@v1
+      - uses: r-lib/actions/setup-pandoc@v1
+      - name: Install rmarkdown and blogdown
+        run: Rscript -e 'install.packages(c("rmarkdown","blogdown"))'
+      - name: Install Hugo
+        run: Rscript -e 'blogdown::install_hugo("0.80.0", extended=TRUE, force=TRUE)'
+      - name: Build website
+        run: Rscript -e 'blogdown::build_site()'
+      - name: Deploy to gh-pages
+        uses: peaceiris/actions-gh-pages@v3.8.0
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./public
+          publish_branch: gh-pages  # default
