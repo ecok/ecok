@@ -11,6 +11,6 @@ features:
 - -citation
 ---
 
-所有笔记列表：
+所有笔记和文章列表：
 
 {{< archives >}}

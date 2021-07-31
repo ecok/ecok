@@ -1,7 +1,7 @@
 ---
 title: "R 方差分析：以多物种、双因素为例"
 author: "sanchufy"
-date: '2021-07-29'
+date: '2021-07-31'
 slug: r-anova
 toc-title: "目录"
 description: 本分析以多物种、双因素为例，展示常用的方差分析的 R 实现。
@@ -95,7 +95,7 @@ summary(df)
 
 先了解你的数据。
 
-```{r}
+```{r boxplot-two-factors, fig.cap = "双因素非交互箱线图"}
 # 不区分物种
 # ----------
 # 箱线图
@@ -103,7 +103,7 @@ boxplot(biomass ~ drought + fertilizer, data = df)
 ```
 
 
-```{r}
+```{r descriptive-statistics, fig.cap = "描述性统计"}
 # 以物种进行分组
 # --------------
 library(lattice)
@@ -128,15 +128,21 @@ ggplot(df, aes(x = drought, y = biomass,
 
 # 条形图/柱状图
 # -------------
-# 计算平均值和标准误
+# 计算平均值、标准差和标准误
 bygroup_mean <- aggregate(
     cbind(biomass, height) ~ drought + fertilizer + species, df,
-    function(x) cbind(mean(x), sd(x)))
+    function(x) cbind(mean(x), sd(x), sqrt(var(x)/length(x))))
 bygroup_mean <- do.call(data.frame, bygroup_mean)
-names(bygroup_mean) <- gsub(".1", "", 
-    names(bygroup_mean), fixed = T)
-names(bygroup_mean) <- gsub(".2", "_sd",
-    names(bygroup_mean), fixed = T)
+
+# names(bygroup_mean) <- gsub(".1", "", 
+#     names(bygroup_mean), fixed = T)
+# names(bygroup_mean) <- gsub(".2", "_sd",
+#     names(bygroup_mean), fixed = T)
+library(stringr)
+colnames(bygroup_mean) <- stringr::str_replace_all(
+    colnames(bygroup_mean),
+    c(".1", ".2", ".3"),
+    c("", "_sd", "_se"))
 
 # 分面作图
 ggplot(bygroup_mean, aes(x = drought, y = biomass, 
@@ -367,7 +373,7 @@ lrm_b2mix_sp_ply <- dlply(df, "species",
 #### 交互作用
 
 
-```{r}
+```{r interaction-added, fig.cap = "叠加处理交互作用"}
 # 方法一
 # plot.new()
 par(mfrow = c(2, 2))
@@ -383,7 +389,7 @@ with(df, by(df, species, function (d){
 ```
 
 
-```{r}
+```{r interaction-pairs, fig.cap = "配对处理交互作用"}
 # 方法二
 library(gplots)
 # plot.new()
@@ -400,7 +406,7 @@ by(df, df$species, function (d){
 
 以下仅以一个物种示例：
 
-```{r}
+```{r interaction-2-way, fig.cap = "主效应和交互作用"}
 # 方法三
 df_aa <- subset(df, species == "AA")
 
@@ -409,7 +415,7 @@ interaction2wt(biomass ~ drought*fertilizer, data = df_aa)
 ```
 
 
-```{r}
+```{r interaction-pairs-comparison, fig.cap = "配对交互作用比较"}
 # 方法四
 library(agricolae)
 D_vs_F_aa <- with(df_aa, interaction(drought, fertilizer, sep = ":"))
@@ -425,7 +431,7 @@ bar.group(hsd_b2inter_aa$groups,
 ```
 
 
-```{r}
+```{r interaction-single, fig.cap = "单物种交互作用"}
 # 方法五
 library(interactions)
 cat_plot(lrm_b2mix_sp$AA, pred = drought, modx = fertilizer, geom = "line")
@@ -489,7 +495,7 @@ comp_hsd_b2in_fert <- fun_mulcomp_res(
 ```
 
 
-```{r}
+```{r boxplot-multiple-comparison-within-group, fig.cap = "组内多重比较箱线图"}
 # library(ggplot2)
 # 箱线图
 pbox_comp_biomass <- ggplot(data = df, aes(x = drought, y = biomass)) +
@@ -522,7 +528,7 @@ pbox_comp_biomass +
 ```
 
 
-```{r}
+```{r bar-multiple-comparison-within-group, fig.cap = "组内多重比较柱状图"}
 # 条形图
 # (1) 基本图
 pbar_comp_biomass <- 
@@ -532,6 +538,7 @@ pbar_comp_biomass <-
     ylab("Biomass") +
     geom_bar(position="dodge", stat = "identity", color = "black") +
     facet_wrap(~species, scale="free") +
+    # 标准差
     geom_errorbar(
         aes(ymin = biomass, ymax = biomass + std),
         width=.2,
@@ -603,7 +610,7 @@ Estimated marginal means (EMMs) 估计的边际平均值
 
 > Estimated marginal means (EMMs) are defined as equally weighted means of these predictions at specified margins
 
-```{r}
+```{r emms-multiple-comparison-within-group, fig.cap = "组内多重比较综合图"}
 # 分组成对比较
 
 library(emmeans)
@@ -637,7 +644,7 @@ comp_emm_b2in_pairwise <- lapply(
 - [Getting started with emmeans](https://aosmith.rbind.io/2019/03/25/getting-started-with-emmeans/)
 
 
-```{r}
+```{r general-multiple-comparison-within-group, fig.cap = "组内多重比较其它图"}
 # 仅以一个物种、一个处理示例
 
 # Tukey
@@ -698,7 +705,7 @@ comp_hsd_b2fert_sp_spp <- fun_mulcomp_res(
 ```
 
 
-```{r}
+```{r multiple-comparison-between-group, fig.cap = "组间多重比较"}
 pbar_comp_biomass_spp <- 
     ggplot(data = comp_hsd_b2fert_spp, 
         aes(x = treat, y = biomass, fill = iGroup)) +
@@ -706,6 +713,7 @@ pbar_comp_biomass_spp <-
     ylab("Biomass") +
     geom_bar(position="dodge", stat = "identity", color = "black") +
     facet_wrap(~fertilizer, scale="free") +
+    # 标准差
     geom_errorbar(
         aes(ymin = biomass, ymax = biomass + std),
         width=.2,
@@ -777,7 +785,7 @@ pbar_comp_biomass_spp2 +
     - Levene’s test
 
 
-```{r}
+```{r diagnostics-linear-gression, fig.cap = "回归检验组图"}
 # 残差分析
 par(mfrow = c(2, 2))
 plot(lrm_b2mix_sp$AA)
@@ -788,7 +796,7 @@ lapply(lrm_b2mix_sp, plot)
 ```
 
 
-```{r}
+```{r observed-vs-fitted, fig.cap = "拟合效果图"}
 # 实际值（观测值）与拟合值（预测值）
 par(mfrow=c(1,1))
 plot(lrm_b2mix_sp$AA$fitted.values ~ lrm_b2mix_sp$AA$model$biomass)

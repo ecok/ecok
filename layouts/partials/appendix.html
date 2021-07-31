@@ -1,5 +1,12 @@
 <section class="appendix">
 
+{{ with (default .Params.license .Site.Params.license ) }}
+<div>
+  <div class="side side-left"><h3>{{ i18n "reUse" }}</h3></div>
+  {{ . | markdownify }}
+</div>
+{{ end }}
+
 {{ partial "correction.html" . }}
 
 <div>
