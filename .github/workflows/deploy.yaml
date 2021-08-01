@@ -1,7 +1,8 @@
 on:
   push:
-     branches:
-       - master
+    branches:
+      - main
+      - master
   pull_request:
     branches:
       - main
@@ -23,7 +24,7 @@ jobs:
       - name: Install Hugo
         run: Rscript -e 'blogdown::install_hugo("0.84.0")'
       - name: Build website
-        run: Rscript -e 'blogdown::build_site()'
+        run: Rscript -e 'blogdown::build_site(TRUE)'
       - name: Deploy to gh-pages
         uses: peaceiris/actions-gh-pages@v3.8.0
         with:

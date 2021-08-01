@@ -1,4 +1,5 @@
 ---
+disable_comments: true
 features:
 - +toc
 - +number_sections

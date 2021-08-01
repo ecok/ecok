@@ -1,3 +1,4 @@
+{{ if and (not .Params.disable_comments) }}
 <section class="appendix">
 
 {{ with (default .Params.license .Site.Params.license ) }}
@@ -21,3 +22,4 @@
   </script>
 </div>
 </section>
+{{ end }}
