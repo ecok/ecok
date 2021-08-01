@@ -1,7 +1,7 @@
 baseurl: "/"
 languageCode: "zh-cn"
 # defaultContentLanguage: "en"
-defaultContentLanguage: "zh"
+# defaultContentLanguage: "zh"
 title: "有油"
 theme: "hugo-prose"
 googleAnalytics: ""
