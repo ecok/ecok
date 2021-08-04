@@ -1,7 +1,7 @@
 baseurl: "/"
 languageCode: "zh-cn"
 # defaultContentLanguage: "en"
-# defaultContentLanguage: "zh"
+defaultContentLanguage: "zh"
 title: "有油"
 theme: "hugo-prose"
 googleAnalytics: ""
@@ -43,7 +43,7 @@ menu:
 
 params:
   homePosts: 10
-  mainSections: ["post"]
+  mainSections: ["post", "note"]
   editLink: "https://github.com/pftz/pftz/edit/master/content/"
   authorDelimiter: ", "
   pageFeatures: [+sidenotes]
