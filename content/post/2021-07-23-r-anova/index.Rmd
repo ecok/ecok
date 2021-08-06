@@ -1,7 +1,7 @@
 ---
 title: "R 方差分析：以多物种、双因素为例"
 author: "sanchufy"
-date: '2021-07-31'
+date: '2021-08-06'
 slug: r-anova
 toc-title: "目录"
 description: 本分析以多物种、双因素为例，展示常用的方差分析的 R 实现。
@@ -19,10 +19,15 @@ knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE,
     dev = if (xfun::loadable('svglite')) 'svglite' else 'svg')
 ```
 
+**更新：**
+
+- 2021-08-06 添加[三因素及多因素，各因素组内的多重比较](#three-factors)
+
+---
 
 **警示：水平有限，以下内容均有可能存在错漏！**
 
-**如有发现，请下方留言或提交 [pull request](https://github.com/pftz/pftz/pulls)，感谢您的贡献！**
+如有发现，请下方留言或提交 [pull request](https://github.com/pftz/pftz/pulls)，感谢您的贡献！
 
 > 仅供参考的示例；
 > 没有通用的模板。
@@ -243,7 +248,7 @@ sum((tapply(df_aa_npk$biomass,df_aa_npk$drought,var)))*4
 ```
 
 
-### 多因素
+### 双因素
 
 本示例为重复试验、非重复测量。
 
@@ -467,7 +472,15 @@ cat_plot(lrm_b2mix_sp$AA, pred = drought, modx = fertilizer, geom = "line")
 
 多重比较：以 Tukey’s HSD 为例
 
-自定义函数下载地址：<https://github.com/pftz/pftz/blob/master/content/post/2021-07-23-r-anova/fun_mulcomp_tukey.R>
+自定义函数下载地址：<https://github.com/pftz/pftz/blob/master/content/post/2021-07-23-r-anova/fun_mulcomp_tukey.R>。
+
+函数说明：
+
+- `fun_mulcomp_hsd()` 一次多重比较
+- `fun_mulcomp_hsd2` 双因素，每因素组内的多重比较
+- `fun_mulcomp_res()` 提取上述函数单因素、双因素分析的结果
+- `fun_mulcomp_hsd3()` 双因素至多因素，每因素组内的多重比较
+
 
 ```{r}
 # HSD
@@ -834,15 +847,59 @@ car::outlierTest(lrm_b2mix_sp$AA)
 ```
 
 
+### 三因素及多因素 {#three-factors}
+
+这里假设除了干旱、施肥外，物种也视为一种处理，例如本地种和入侵种，尽管如此，应该理解为分组变量更合适。如果物种较多（≥ 5），有时用混合线性模型可能更适合，具体依科学问题而定。
+
+现在假设有了三个处理，在每两个处理一致的情况下，进行另一处理组内的多重比较。
+
+```{r}
+# 加载自定义的函数，用于各因素内各水平的多重比较
+# source('fun_mulcomp_tukey.R', encoding = 'UTF-8')
+
+# 三因素组内比较
+comp_hsd_b3in_DIY2 <- fun_mulcomp_hsd3(
+    y = "biomass", 
+    data = df, 
+    trts = c("species", "drought", "fertilizer"))
+
+# 选择一个比较验证
+identical(comp_hsd_b3in_DIY2$SP_AA.DR_D25, 
+    fun_mulcomp_hsd(biomass ~ fertilizer, 
+        subset(df, species == "AA" & drought == "D25")))
+
+# fun_mulcomp_hsd3() 也可用于双因素分析
+# 双因素组内比较
+comp_hsd_b2in_DIY2 <- by(df, df$species, 
+    function(d) fun_mulcomp_hsd3(
+        y = "biomass", 
+        data = d, 
+        trts = c("drought", "fertilizer")))
+
+# 可与之前的方法比较验证一下
+comp_hsd_b2in_DIY$AA$drought
+comp_hsd_b2in_DIY2$AA[1:3]
+
+comp_hsd_b3in_DIY2[
+    grep("AA.*?D\\d{2}",
+    names(comp_hsd_b3in_DIY2))]
+```
+
+
+`fun_mulcomp_hsd3()` 使用了不同于 `fun_mulcomp_hsd2()` 的编写思路，后者仅适用于双因素，而前者可用于双因素、三因素乃至更多因素的组内分析，从而不必频繁地使用 `subset()` 取子集一一分析。注意，默认仍然使用 `agricolae::HSD.test()` 进行多重比较，如需改用其它方法，请在 `fun_mulcomp_hsd()` 中自行修改。
+
+如果理解了 `fun_mulcomp_hsd3()` 的编写思路，也可按照这种模式，进行组内其它分析与作图，相信能取得事半功倍的效果。
+
 ----
 
 ## 待办
 
-- 增补/删减内容，使其更完整且专注既定主题
-- 添加方法的利弊比较，以及用于选择的经验法则
-- 增加多个因变量的分析，以及为不同因变量进行批量分析的 R 实现
-- 提取主线，单独打包成自定义函数
-- 优化作图，更符合出版格式
+- [ ] 为 R 分析添加必要的注释
+- [ ] 增补/删减内容，使其更完整且专注既定主题
+- [ ] 添加方法的利弊比较，以及用于选择的经验法则
+- [ ] 增加多个因变量的分析，以及为不同因变量进行批量分析的 R 实现
+- [ ] 提取主线，单独打包成自定义函数
+- [ ] 优化作图，更符合出版格式
 
 ## 贡献
 
