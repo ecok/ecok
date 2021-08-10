@@ -1,0 +1,75 @@
+{{ partial "header.html" . }}
+
+<div class="container list digest">
+<main>
+
+{{ with .Content }}
+<section class="article-list">
+<div>{{ . }}</div>
+</section>
+{{ end }}
+
+
+{{ $pages := .Pages }}
+{{ $pages = first (default 6 .Site.Params.digePosts) (sort (where .Site.RegularPages "Type" "in" .Site.Params.digeSections) "Date" "desc") }}
+
+{{ range $pages }}
+  <section class="article-list{{ if .Draft }} draft{{ end }}">
+    <table>
+    <tbody>
+    <tr>
+    <td>
+    {{ with .Params.categories }}
+    {{ range first 1 . }}
+    <div class="categories">
+      <a href="{{ relURL (print "/categories/" . "/" | urlize) }}">{{ . }}</a>
+    </div>
+    {{ end }}
+    {{ end }}
+    <h1><a href="{{ .RelPermalink }}">{{ .Title }}</a></h1>
+     <div class="date-author">
+      {{ if .Date }}<span>{{ .Date.Format "2006-01-02" }}</span>{{ end }}
+      {{ with .Params.author }}<span>{{ . }}</span>{{ end }}
+    </div>
+    <div class="summary">
+      <a href="{{ .RelPermalink }}">
+      {{ with .Params.thumbnail }}
+      <div class="thumbnail"><img src="{{ relURL . }}" alt="Thumbnail" /></div>
+      {{ else }}
+      {{ $img := findRE "<img src=\"[^\"]+\"" .Content 1 }}
+      {{ range $img }}
+      <div class="thumbnail">{{ (print . " alt=\"Thumbnail\" />") | safeHTML }}</div>
+      {{ end }}
+      {{ end }}
+      {{ $summary := .Description }}
+      {{ if $summary }}
+      {{ $summary = (markdownify $summary) }}
+      {{ else }}
+      {{ $summary = ((delimit (findRE "(<p.*?>(.|\n)*?</p>\\s*)+" .Content) "[&hellip;] ") | plainify | truncate (default 200 .Site.Params.summaryLength) (default " &hellip;" .Site.Params.textTruncated ) | replaceRE "&amp;" "&") }}
+      {{ end }}
+      {{ $summary | safeHTML }}
+      <a href="{{ .RelPermalink }}" class="more" title={{ i18n "readMore" }}>{{ i18n "readMore" }} &rarr;</a>
+    </div>
+    </td>
+    {{ if $.IsHome }}
+    <td class="spacer spacer-right"></td>
+    <td class="side-title">{{ with .Section }}<h1><a href="{{ print "/" . "/" | relURL }}">{{ . }}</a></h1>{{ end }}</td>
+    {{ end }}
+    </tr>
+    </tbody>
+    </table>
+  </section>
+{{ end }}
+
+{{ if not .IsHome }}
+{{ template "_internal/pagination.html" . }}
+{{ end }}
+
+{{ partial "disqus.html" . }}
+</main>
+</div>
+
+<script src="{{ relURL "/js/article-titles.js" }}"></script>
+<script async src="{{ relURL "/js/head-width.js" }}"></script>
+
+{{ partial "footer.html" . }}

@@ -7,11 +7,11 @@ description: >
   函数做成速查表（cheatsheet），供参考索引。
 slug: r-cheatsheet-standard-tests
 tags:
-  - cheatsheet
   - 假设检验
+  - cheatsheet
 categories:
-  - R
-  - 统计
+  - R 语言
+  - 统计学
 ---
 
 常常为了快速查找 R 函数，会把一些功能相近的 R 函数做成**速查表**（cheat sheets/cheatsheets，也见翻译成小抄、备忘录），便于索引、参考，比如，RStudio 做了很多这种[速查表](https://www.rstudio.com/resources/cheatsheets/)（管理的 [Github 仓库](https://github.com/rstudio/cheatsheets)）。记得早几年也有过一些流行的中文翻译版，想必难以与原版的更新同步，又正值如今网上资源泛滥，流传得少了。

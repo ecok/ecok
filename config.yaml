@@ -43,8 +43,11 @@ menu:
 
 params:
   homePosts: 10
+  digePosts: 12
   mainSections: ["post", "note"]
+  digeSections: ["digest"]
   editLink: "https://github.com/pftz/pftz/edit/master/content/"
+  summaryLength: 120
   authorDelimiter: ", "
   pageFeatures: [+sidenotes]
   description: >

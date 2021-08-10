@@ -1,8 +1,8 @@
 ---
 disable_comments: true
 menu:
-  header:
-    weight: 3
+  footer:
+    weight: 1
 title: 归档
 features:
 - -toc

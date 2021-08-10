@@ -4,7 +4,7 @@ author: sanchufy
 date: '2021-08-05'
 slug: r-markdown-tables
 categories:
-  - R
+  - R 语言
 tags:
   - rmarkdown
   - markdown
