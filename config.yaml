@@ -12,7 +12,7 @@ paginate: 2
 # publishdir: "public"
 
 permalinks:
-  post: "/post/:year/:month/:day/:slug/"
+  post: "/post/:06/:01/:slug/"
 
 outputs:
   home: [html, rss, json]

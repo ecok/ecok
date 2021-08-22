@@ -4,7 +4,7 @@ author: "sanchufy"
 date: '2021-08-06'
 slug: r-anova
 toc-title: "目录"
-description: 本分析以多物种、双因素为例，展示常用的方差分析的 R 实现。
+description: 一个实验数据常用的方差分析的 R 实现。尽量把棘手的地方写了，剩下的增增补补留给诸位客官自行发挥。
 tags:
   - 方差分析
   - 多重比较
@@ -474,7 +474,7 @@ cat_plot(lrm_b2mix_sp$AA, pred = drought, modx = fertilizer, geom = "line")
 
 多重比较：以 Tukey’s HSD 为例
 
-自定义函数下载地址：<https://github.com/pftz/pftz/blob/master/content/post/2021-07-23-r-anova/fun_mulcomp_tukey.R>。
+下载：[Tukey 多重比较自定义函数](fun_mulcomp_tukey.R)。
 
 函数说明：
 

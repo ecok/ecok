@@ -4,7 +4,7 @@ author: "sanchufy"
 date: '2021-08-06'
 slug: r-anova
 toc-title: "目录"
-description: 本分析以多物种、双因素为例，展示常用的方差分析的 R 实现。
+description: 一个实验数据常用的方差分析的 R 实现。尽量把棘手的地方写了，剩下的增增补补留给诸位客官自行发挥。
 tags:
   - 方差分析
   - 多重比较
@@ -935,7 +935,7 @@ Figure 10: 单物种交互作用
 <div id="物种内比较" class="section level5">
 <h5>物种内比较</h5>
 <p>多重比较：以 Tukey’s HSD 为例</p>
-<p>自定义函数下载地址：<a href="https://github.com/pftz/pftz/blob/master/content/post/2021-07-23-r-anova/fun_mulcomp_tukey.R" class="uri">https://github.com/pftz/pftz/blob/master/content/post/2021-07-23-r-anova/fun_mulcomp_tukey.R</a>。</p>
+<p>下载：<a href="fun_mulcomp_tukey.R">Tukey 多重比较自定义函数</a>。</p>
 <p>函数说明：</p>
 <ul>
 <li><code>fun_mulcomp_hsd()</code> 一次多重比较</li>
@@ -1313,11 +1313,13 @@ Figure 20: 回归检验组图
 <pre class="r"><code># 使用隐式循环批量作图
 par(mfrow = c(4, 4))
 lapply(lrm_b2mix_sp, plot)</code></pre>
+<div class="fullwidth">
 <div class="figure"><span id="fig:diagnostics-linear-gression-2"></span>
 <img src="{{< blogdown/postref >}}index_files/figure-html/diagnostics-linear-gression-2.svg" alt="回归检验组图" width="672" />
 <p class="caption">
 Figure 21: 回归检验组图
 </p>
+</div>
 </div>
 <pre><code>## $AA
 ## NULL

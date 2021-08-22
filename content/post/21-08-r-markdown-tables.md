@@ -164,6 +164,13 @@ HTML 表格一般通过 CSS 设定各种主题（颜色、格式等）。R 中�
     - **gt** 包和 **gtsummary** 包：可供出版的分析和汇总表
 - 前面提到过的在线工具 [Madoko](https://www.madoko.net/editor.html) 也是一个专注于学术和技术文章的 Markdown 解析器。其它可参考：[Academic blogging workflow](https://danmackinlay.name/notebook/academic_blogging_workflow.html#distill)
 
+其它可以了解的包或项目：
+
+- **[Output Nice-Looking Formatted Tables](https://community.rstudio.com/t/output-nice-looking-formatted-tables/1084)**
+- **[sfirke/packagemetrics](https://github.com/ropenscilabs/packagemetrics#creating-a-pretty-metrics_table)** | [tableGallery](https://github.com/sfirke/packagemetrics/blob/master/inst/examples/tableGallery.Rmd)
+- **[sjPlot](https://dmyee.files.wordpress.com/2016/03/table_workshop.pdf)**
+- **[renkun-ken/formattable](https://github.com/renkun-ken/formattable/)**
+
 
 # 后记
 
