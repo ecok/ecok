@@ -1,3 +1,6 @@
 [submodule "themes/hugo-prose"]
 	path = themes/hugo-prose
 	url = https://github.com/yihui/hugo-prose.git
+[submodule "static/assets"]
+	path = static/assets
+	url = https://github.com/pftz/assets
