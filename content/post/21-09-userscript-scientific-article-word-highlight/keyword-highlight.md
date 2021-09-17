@@ -15,7 +15,7 @@ features:
 description: '一个浏览器用户脚本，自定义词语，在文章内以高亮显示，目前已支持 Inoreader、Elsevier、Wiley、Springer、Nature、Science、PNAS 各网站'
 ---
 
-我们在阅读文章时，有些字词是我们想要特别关注的，如果可以被标记出来，想必会有利于阅读。在浏览器中这可以使用搜索功能，使某些词（即检索词）高亮显示，但毕竟、终究不够“懒”。故闲暇又水了一个浏览器用户脚本 (userscript)[^1]，通过自定义比较关注的一至多个主题词（允许使用正则表达式），当文章中一旦出现这些主题词时则自动以高亮显示。结合翻译脚本，~~又~~可以愉快的看文献了！
+我们在阅读文章时，有些字词是我们特别想要关注的，幻想如果被标记出来，势必会读得飞起。在浏览器中这可以使用搜索功能，使某些词（即检索词）高亮显示，但毕竟这种姿势也太不“懒”了。故闲暇又水了一个浏览器用户脚本 (userscript)[^1]，通过自行设定想要关注的一至多个主题词（允许使用正则表达式），当文章中一旦出现这些主题词时则自动以高亮显示。结合之前的翻译脚本，~~又~~可以愉快的看文献了！
 
 [^1]: 前一个是：[科技文章标题翻译脚本](/post/21/08/userscript-scientific-article-title-translation/)
 
@@ -57,7 +57,9 @@ var letI_Wrapper = new wrapTextWithElement ('conservation|\
 ![Springer 文章页面](/assets/image/21-09-Springer-highlight.png "Figure 4: Springer 主题词高亮")
 
 
-本人并没有学过 Javascript，这个脚本毫无意外是东拼西凑形成的，罗列如下并表示感谢：
+本人并没有学过 Javascript，这个脚本毫无意外是东拼西凑形成的，遑论组合得优不优雅了，倘始遇到 bug 不要惊慌就是了。
+
+~~抄袭~~参考来源如下并表示感谢：
 
 - [How to change the color of one specific letter on a web page (wrap the text)?](https://stackoverflow.com/a/14178388)
 - [waitForKeyElements.js](https://gist.github.com/BrockA/2625891)
