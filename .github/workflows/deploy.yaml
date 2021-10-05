@@ -29,6 +29,6 @@ jobs:
         uses: peaceiris/actions-gh-pages@v3.8.0
         with:
           deploy_key: ${{ secrets.ACTIONS_DEPLOY_KEY }}
-          external_repository: pftz/pftz.github.io
+          external_repository: ecok/ecok.github.io
           publish_branch: master
           publish_dir: ./public

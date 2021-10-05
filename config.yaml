@@ -2,17 +2,20 @@ baseurl: "/"
 languageCode: "zh-cn"
 # defaultContentLanguage: "en"
 defaultContentLanguage: "zh"
-title: "有油"
+title: "生息"
 theme: "hugo-prose"
 googleAnalytics: ""
 disqusShortname: ""
 ignoreFiles: ["\\.Rmd$", "\\.Rmarkdown$", "_cache$", "\\.knit\\.md$", "\\.utf8\\.md$"]
 footnotereturnlinkcontents: "↩"
-paginate: 2
+paginate: 20
 # publishdir: "public"
 
 permalinks:
-  post: "/post/:06/:01/:slug/"
+  post: "/p/:06/:01/:slug/"
+  note: "/n/:06/:01/:slug/"
+  slides: "/s/:06/:01/:slug/"
+  digest: "/d/:06/:01/:slug/"
 
 outputs:
   home: [html, rss, json]
@@ -44,16 +47,16 @@ menu:
 params:
   homePosts: 10
   digePosts: 12
-  mainSections: ["post", "note"]
+  mainSections: ["post", "note", "slides"]
   digeSections: ["digest"]
   editLink: "https://github.com/pftz/pftz/edit/master/content/"
   summaryLength: 120
   authorDelimiter: ", "
   pageFeatures: [+sidenotes]
   description: >
-    PFTZ - 有油分享.
+    EcoK - 生息.
   footer: >
-    &copy; PFTZ (2021 - 2021)
+    &copy; EcoK (2021 - 2021)
   license: >
     本文文字和图表使用[知识共享许可协议
     CC BY 4.0](https://creativecommons.org/licenses/by/4.0/)，[源文件](https://github.com/pftz/pftz)采用
