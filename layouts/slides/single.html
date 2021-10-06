@@ -4,24 +4,26 @@
     <meta charset="utf-8" />
     <title>{{ with .Title }} {{ . }} | {{ end }}{{ .Site.Title }}</title>
     {{ with .Params.author }}
-    <meta name="author" content="{{ if reflect.IsSlice . }}{{ delimit . (default " / " $.Site.Params.authorDelimiter) }}{{ else }}{{ . }}{{ end }}"/>
+    <meta name="author" content="{{ if reflect.IsSlice . }}{{ delimit . (default " / " $.Site.Params.authorDelimiter) }}{{ else }}{{ . }}{{ end }}" />
     {{ end }}
     {{ if .Params.date }}
-    <meta name="date" content="{{ .Date.Format "2006-01-02" }}"/>
+    <meta name="date" content="{{ .Date.Format "2006-01-02" }}" />
     {{ end }}
     <script src="/libs/header-attrs-2.9/header-attrs.js"></script>
-    <link rel="stylesheet" href="{{ "/css/chinese.css" | relURL }}" />
+    <link rel="stylesheet" href="{{ "/css/chinese.css" | relURL }}" type="text/css" />
   </head>
   <body>
-    <textarea id="source">
+{{ if eq ($.Param "output.xaringan::moon_reader.seal") false }}<textarea id="source">{{ else }}
+<textarea id="source">
 class: center, middle, inverse, title-slide
 
-# {{ with .Title }} {{ . }} {{ end }}
-## {{ with .Params.subtitle }} {{ . }} {{ end }}
+# {{ with .Title }}{{ . }}{{ end }}
+## {{ with .Params.subtitle }}{{ . }}{{ end }}
 ### {{ with .Params.author }}{{ if reflect.IsSlice . }}{{ delimit . (default " / " $.Site.Params.authorDelimiter) }}{{ else }}{{ . }}{{ end }}{{ end }}
 ### {{ if .Params.date }}{{ .Date.Format "2006-01-02" }}{{ end }}
 
 ---
+{{ end }}
 {{- .RawContent -}}
     </textarea>
     <style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
@@ -29,11 +31,10 @@ class: center, middle, inverse, title-slide
     <script src="/js/macro.js"></script>
     <script>
       var slideshow = remark.create({
-        highlightStyle: {{$.Param "output.nature.highlightStyle" | default "github" }},
-        highlightLines: {{$.Param "output.nature.highlightLines" | default true }},
-        countIncrementalSlides: {{$.Param "output.nature.countIncrementalSlides" | default false }},
+        highlightStyle: {{ $.Param "output.xaringan::moon_reader.nature.highlightStyle" | default "github" }},
+        highlightLines: {{ $.Param "output.xaringan::moon_reader.nature.highlightLines" | default true }},
+        countIncrementalSlides: {{ $.Param "output.xaringan::moon_reader.nature.countIncrementalSlides" | default false }},
       });
-    </script>
     if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
       window.dispatchEvent(new Event('resize'));
     });
@@ -43,7 +44,6 @@ class: center, middle, inverse, title-slide
       s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
       d.head.appendChild(s);
     })(document);
-    
     (function(d) {
       var el = d.getElementsByClassName("remark-slides-area");
       if (!el) return;

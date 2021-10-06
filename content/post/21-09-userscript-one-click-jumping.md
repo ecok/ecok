@@ -4,7 +4,7 @@ author: sanchufy
 date: '2021-09-17'
 slug: userscript one-click jumping
 categories:
-  - javascript
+  - JavaScript
   - 工具
 tags:
   - userscript

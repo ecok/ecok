@@ -54,9 +54,9 @@ params:
   authorDelimiter: ", "
   pageFeatures: [+sidenotes]
   description: >
-    EcoK - 生息.
+    生息 EcoKaboom (EcoK).
   footer: >
-    &copy; EcoK (2021 - 2021)
+    &copy; EcoKaboom (2021 - 2021)
   license: >
     本文文字和图表使用[知识共享许可协议
     CC BY 4.0](https://creativecommons.org/licenses/by/4.0/)，[源文件](https://github.com/pftz/pftz)采用

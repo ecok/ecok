@@ -4,7 +4,7 @@ author: sanchufy
 date: '2021-08-23'
 slug: userscript scientific article title translation
 categories:
-  - javascript
+  - JavaScript
   - 工具
 tags:
   - userscript
