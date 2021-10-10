@@ -9,8 +9,9 @@ categories:
 tags:
   - markdown
   - rmarkdown
+  - 指南
 lastmod: '2021-10-05T16:34:12+08:00'
-description: '使用 R Markdown (**xaringan** 包) 与 Javascript (**remark.js** 库) 制作幻灯片的简明指南'
+description: '使用 R Markdown (**xaringan** 包) 与 Javascript (**remark.js** 库) 快速制作幻灯片'
 output:
   xaringan::moon_reader:
     lib_dir: libs
@@ -27,7 +28,7 @@ output:
 class: center, middle, inverse, title-slide
 
 #  xaringan + remark.js <br/>制作幻灯片
-## 🎞
+## 👁
 ### sanchufy
 ### 2021-10-05
 
@@ -65,6 +66,7 @@ class: inverse, middle, center
 
 # remark.js
 ### Markdown 制作幻灯片（基础）
+## 🎞🎞🎞
 
 ---
 
@@ -103,7 +105,7 @@ layout: true
 - 全幅背景图片：`background-image: url(image.jpg)`
 - 内容属性：定义样式 (**Content Classes**)：搭配 CSS 设定元素样式
 - 语法高亮：代码块、行内
-    - [支持的语言](https://highlightjs.org/static/demo/)，如 `bash`、`markdown` 等
+    - [支持的语言](https://github.com/highlightjs/highlight.js/blob/main/SUPPORTED_LANGUAGES.md)，如 `DOS`、`Markdown` 等
     - [支持的风格](https://github.com/gnab/remark/wiki/Configuration#highlighting)，如 `github`、`solarized-light` 等
 - 幻灯片页面比例、计时等
 

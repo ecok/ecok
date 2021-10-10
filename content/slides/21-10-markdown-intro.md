@@ -220,7 +220,7 @@ layout: true
 
 .small[convert *f*rom **markdown** *t*o **html** and put the *o*utput in a *s*tandalone file]
 
-```bash
+```cmd
 pandoc <filename>.md -f markdown -t html -s -o <filename>.html
 ```
 
@@ -238,7 +238,7 @@ pandoc <filename>.md -f markdown -t html -s -o <filename>.html
 如下，可生成含目录 (*T*able *o*f *C*ontent) 的独立文档：
 ]
 
-```bash
+```cmd
 pandoc "<filename>.md" -o "<filename>.html" -f markdown --template GitHubModified.html5 --toc --mathjax --self-contained
 ```
 
