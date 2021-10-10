@@ -5,7 +5,6 @@ author: sanchufy
 date: '2021-10-10'
 slug: regex intro
 categories:
-  - 方法
   - 工具
 tags:
   - 搜索
