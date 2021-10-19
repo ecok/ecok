@@ -1,14 +1,14 @@
 // ==UserScript==
 // @name         学术文章-标题翻译机
-// @namespace    http://tampermonkey.net/
 // @version      0.39
-// @description  该脚本用于翻译各类常用学术网站文章标题为中文
+// @description  该脚本用于翻译各类常用学术网站文章标题为中文。Forked and modified from https://greasyfork.org/zh-CN/scripts/378277-%E7%BF%BB%E8%AF%91%E6%9C%BA
 // @author       HolynnChen
 // @match        *://*.webofscience.com/*
 // @match        *://scholar.google.com/*
 // @match        *://en.yaodeyo.com:92/*
 // @match        *://*.inoreader.com/*
 // @match        *://*.innoreader.com/*
+// @match        *://*.zotero.org/*
 // @grant        GM_xmlhttpRequest
 // @grant        GM_setValue
 // @grant        GM_getValue
@@ -16,7 +16,6 @@
 // @require      https://cdn.jsdelivr.net/npm/js-base64@2.5.2/base64.min.js
 // @run-at       document-body
 // @grant        GM_addStyle
-// @downloadURL  none
 // ==/UserScript==
 
 // 翻译文本样式
@@ -154,6 +153,13 @@ const rules={
         name:'Inoreader',
         matcher:/https:\/\/.*?.inn?oreader.com\/.+/,
         selector:baseSelector('div[class^="article"][class$="title"] > a, div[class~="article_title"] > a'),
+        textGetter:baseTextGetter,
+        textSetter:baseTextSetter
+    },
+    'Zotero':{
+        name:'Zotero',
+        matcher:/https:\/\/.*?.zotero.org\/groups\/.+/,
+        selector:baseSelector('li.metadata.title > div.value > div'),
         textGetter:baseTextGetter,
         textSetter:baseTextSetter
     }

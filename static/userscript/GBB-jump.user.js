@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         GBB-jump
 // @version      0.1
-// @description  try to take over the world!
+// @description  Forked and modified from https://greasyfork.org/en/scripts/377828-startpage-shortcuts/code
 // @author       You
 // @match        https://*.shuu.cf/extdomains/*
 // @match        https://*.bing.com/*

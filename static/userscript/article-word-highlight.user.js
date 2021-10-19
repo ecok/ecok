@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         inoreader-highlight
-// @description  Wrapping/Coloring letters in an HTML page
+// @description  Wrapping/Coloring letters in an HTML page. Forked and modified from https://stackoverflow.com/a/14178388
 // @version      0.1
 // @match        https://*.inoreader.com/*
 // @match        https://*.innoreader.com/*
@@ -11,6 +11,7 @@
 // @match        https://*.science.org/*
 // @match        https://*.nature.com/*
 // @match        https://*.pnas.org/*
+// @match        https://*.zotero.org/*
 // @require      https://cdn.bootcdn.net/ajax/libs/jquery/3.4.1/jquery.min.js
 // @require      https://gist.githubusercontent.com/raw/2625891/waitForKeyElements.js
 // @grant        GM_addStyle
@@ -62,6 +63,11 @@ const rules={
         name:'Inoreader',
         matcher:/https:\/\/www.inn?oreader.com\/.*/,
         selector:'span.article_header_title, div.article_title, div.article_content > h2 + p'
+    },
+    'Zotero':{
+        name:'Zotero',
+        matcher:/https:\/\/www.zotero.org\/.*/,
+        selector:'div.metadata.title > div.truncate, li.metadata.title > div.value > div, section.abstract > div > div'
     }
 };
 
