@@ -98,3 +98,9 @@
 .categories a, 
 .post-card td span, 
 .article-list .more {color: #666;}
+
+/* figure */
+.figure {
+  text-align: center;
+  margin: 1em 0;
+}

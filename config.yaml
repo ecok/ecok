@@ -49,7 +49,7 @@ params:
   digePosts: 12
   mainSections: ["post", "note", "slides"]
   digeSections: ["digest"]
-  editLink: "https://github.com/pftz/pftz/edit/master/content/"
+  editLink: "https://github.com/ecok/ecok/edit/master/content/"
   summaryLength: 120
   authorDelimiter: ", "
   pageFeatures: [+sidenotes]
@@ -59,7 +59,7 @@ params:
     &copy; EcoKaboom (2021 - 2021)
   license: >
     本文文字和图表使用[知识共享许可协议
-    CC BY 4.0](https://creativecommons.org/licenses/by/4.0/)，[源文件](https://github.com/pftz/pftz)采用
+    CC BY 4.0](https://creativecommons.org/licenses/by/4.0/)，[源文件](https://github.com/ecok/ecok)采用
     MIT 协议。
 
 markup:
