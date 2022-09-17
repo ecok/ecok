@@ -1,0 +1,493 @@
+---
+title: 一个典型通江湖（洞庭湖）响应水情变化的水质评价及变化趋势分析
+author: '整理：sanchufy'
+date: '2022-09-12'
+lastmod: '2022-09-17T22:44:36+0800'
+slug: evaluation and variation trends analysis of water quality in response to water regime changes
+categories:
+  - 研究
+tags:
+  - 水文
+  - Environ Pollut
+description: 将 M-K 检验与 SOM 方法相结合，考察 1991-2018 年间洞庭湖水质的年际变化趋势和状况。
+bibliography: [../../../static/bib/scholar.bib, rf.bib]
+link-citations: true
+toc-title: 目录
+features:
+  - +toc
+  - +number_sections
+  - +sidenotes
+---
+
+
+
+<p>Geng, M., K. Wang, N. Yang, et al. (2021). “Evaluation and Variation
+Trends Analysis of Water Quality in Response to Water Regime Changes in
+a Typical River-Connected Lake (Dongting Lake), China”. In:
+<em>Environmental Pollution</em> 268, p. 115761. ISSN: 0269-7491. DOI:
+<a href="https://doi.org/10.1016%2Fj.envpol.2020.115761">10.1016/j.envpol.2020.115761</a>.
+URL:
+<a href="https://www.sciencedirect.com/science/article/pii/S0269749120364502">https://www.sciencedirect.com/science/article/pii/S0269749120364502</a>
+(visited on 9月. 12, 2022).</p>
+<hr />
+<div id="背景" class="section level1">
+<h1>背景</h1>
+<ul>
+<li>概念
+<ul>
+<li>water regime 水文状况；水情；水动态
+<ul>
+<li>水位、水量、水温、化学成分等要素随时间、空间的变化过程 (《水利科学技术》)</li>
+</ul></li>
+<li>abrupt change points 突变点</li>
+<li>pollution load 污染负荷
+<ul>
+<li>水环境在一定时间内接纳污染物的总量 (《水利科学技术》)</li>
+<li>区域或环境要素对污染物的负载量 (《地理学》)</li>
+<li>在一定时期内进入污水处理厂或排放到纳污水体中的特定污染物的数量 (《化工名词（四）》)</li>
+<li>在单位时间、单位面积或单位体积环境单元内所接纳、承受污染物的量 (《生态学》)</li>
+</ul></li>
+<li>hydrological alterations/variation/regulations</li>
+</ul></li>
+<li>湖泊的水质在淡水提供生态功能方面起着关键作用</li>
+<li>工业的快速发展和农用化学品的广泛使用促进水质恶化</li>
+<li>收集可靠的水质信息用于管理和政府决策</li>
+<li>上游大坝的水量调节影响水质
+<ul>
+<li>水的停留时间增加，光照条件改善，蓄水库中的沉积物滞留，可以加强生物地球化学循环</li>
+<li>有利于水库中磷的吸附、沉积物对水的解吸以及水库的固氮，从而增加受纳水体的养分含量</li>
+<li>水库阻碍养分的运输，改变了养分从溶解到颗粒形式的转化，影响输送到受纳湖泊的养分通量的大小和形态</li>
+<li>对于下游湖泊，大坝减少了水的排放量和水的交换频率，导致湖泊的自净能力直接下降</li>
+<li>大坝通过增加水的停留时间和减少湍流来改变下游湖泊的水文条件，从而导致悬浮物沉降和营养物质的富集</li>
+</ul></li>
+<li>洞庭湖是与三峡大区相连的最近的下游湖泊，已被确定为中国最典型的连河湖泊，属拉姆萨尔湿地 (Ramsar Sites; 国际重要湿地)
+<ul>
+<li>异常的季节性干旱</li>
+<li>湖水水质持续恶化，藻华事件增多</li>
+</ul></li>
+<li>确定 TGD 对洞庭湖水质的影响并提供污染控制措施，需要对水质进行长期的全面评估。</li>
+</ul>
+<div id="目标" class="section level2">
+<h2>目标</h2>
+<ol style="list-style-type: decimal">
+<li>描述三峡工程启用前、后湖水水质变化趋势</li>
+<li>检测水质参数的突然变化</li>
+<li>基于 SOM 进行水质评价</li>
+</ol>
+</div>
+</div>
+<div id="主要结论" class="section level1">
+<h1>主要结论</h1>
+<ul>
+<li>TN 和 TP 在所有聚类中都表现出高浓度，并且被归类为低于饮用水质量标准。</li>
+<li>洞庭湖水质在 TGD 后显著下降，表明在污染负荷和水文调节的影响下水质恶化的风险更高。</li>
+<li>严格控制过度的外部养分负荷和有效的水文调节对于维持湖泊的生态功能至关重要。</li>
+</ul>
+<div class="figure">
+<img src="https://ars.els-cdn.com/content/image/1-s2.0-S0269749120364502-fx1_lrg.jpg" title="Graphical abstract" style="width:80.0%" alt="" />
+<p class="caption"><strong>Figure 1.</strong> 三峡大坝导致的水文变化，加之污染负荷，增加了水体恶化的风险(来源: <a href="https://www.sciencedirect.com/science/article/pii/S0269749120364502#abs0015">ScienceDirect</a>)</p>
+</div>
+</div>
+<div id="结果" class="section level1">
+<h1>结果</h1>
+<p>摘要：</p>
+<ul>
+<li>在整个研究期间，TN 和 BOD<sub>5</sub> 的浓度显著增加。</li>
+<li>TGD 后 6 个水质参数的突变点数量多于 TGD 前，表明 TGD 后水质恶化风险增加。</li>
+<li>SOM 结果表明，四个聚类的 pH 值范围为 7.64~7.85；此外，1991-1997 年和 2000-2003 年其它水质参数的浓度相对较低，表明 TGD 前的水质较好。</li>
+<li>聚类群组中 TN 和 TP 的分类范围为 IV-V 级，不符合饮用水的 III 级标准，造成洞庭湖生态风险较高。</li>
+<li>这些结果表明，在污染负荷和水文调节的影响下，TGD 后洞庭湖水质恶化。</li>
+</ul>
+<div id="水质趋势特征" class="section level2">
+<h2>水质趋势特征</h2>
+<p>三峡工程前 pre-TGD vs. 三峡工程后 post-TGD<br />
+(开工、落成前 inauguration / 投入使用 became functional；2003 年 6 月开始蓄水)</p>
+<ul>
+<li>pH
+<ul>
+<li>前、后无显著变化</li>
+</ul></li>
+<li>COD<sub>Mn</sub>
+<ul>
+<li>前、后显著增加</li>
+<li>开工后，显著下降</li>
+</ul></li>
+<li>NH<sub>3</sub>–N
+<ul>
+<li>开工前，出现波动</li>
+<li>开工后，2007 年达到峰值后呈显著下降</li>
+</ul></li>
+<li>TN、BOD<sub>5</sub>
+<ul>
+<li>前、后显著增加</li>
+</ul></li>
+<li>TP
+<ul>
+<li>开工前，显著上升</li>
+<li>开工后，显著下降</li>
+</ul></li>
+</ul>
+</div>
+<div id="突变点" class="section level2">
+<h2>突变点</h2>
+<p>对于突变点，采用顺序统计曲线 <span class="math inline">\(UF_k\)</span> 和反向统计曲线 <span class="math inline">\(UB_k\)</span>。</p>
+<ul>
+<li>pH
+<ul>
+<li>除 2004-2008 年的 <span class="math inline">\(UB_k\)</span> 值外，pH 值其它所有的 <span class="math inline">\(UF_k\)</span> 和 <span class="math inline">\(UB_k\)</span> 值均在 95% 的置信区间内，呈先下降后上升趋势</li>
+<li>两条曲线在 1998、2016、2017 年相交</li>
+</ul></li>
+<li>COD<sub>Mn</sub>
+<ul>
+<li><span class="math inline">\(UF_k\)</span> 和 <span class="math inline">\(UB_k\)</span> 呈现出与 pH 值相似的趋势</li>
+<li>1994、1999、2014、2016、2017 年有五个突变点</li>
+</ul></li>
+<li>NH<sub>3</sub>-N
+<ul>
+<li>突变点出现在 1998、2017 年</li>
+<li><span class="math inline">\(UF_k\)</span> 和 <span class="math inline">\(UB_k\)</span> 值在 1998 年后呈现明显波动趋势</li>
+</ul></li>
+<li>TN
+<ul>
+<li><span class="math inline">\(UF_k\)</span> 在 2008 年前几乎为零，随后不断增加，2010 年之后超过 1.96 的上置信线</li>
+<li><span class="math inline">\(UF_k\)</span> 和 <span class="math inline">\(UB_k\)</span> 在 2007 年相交之后显示出相反的轨迹</li>
+</ul></li>
+<li>TP
+<ul>
+<li><span class="math inline">\(UF_k\)</span> 不在 1998-2010 年的 95% 置信区间内</li>
+<li>突变点出现在 1993 年</li>
+</ul></li>
+<li>BOD<sub>5</sub>
+<ul>
+<li><span class="math inline">\(UF_k\)</span> 和 <span class="math inline">\(UB_k\)</span> 呈现明显相反的趋势，分别超过 2004-2018 年和 1991-2004 年 1.96 的置信上限</li>
+<li>尽管 2004 年的交点略微超出了 1.96 的置信线，但考虑到第 3.1 节介绍的水质趋势分析，仍将其指定为突变点</li>
+</ul></li>
+</ul>
+</div>
+<div id="水质的视觉评估" class="section level2">
+<h2>水质的视觉评估</h2>
+<ol style="list-style-type: decimal">
+<li>根据 SOM 训练结果，通过 k-means 聚类分析，将洞庭湖的水质分为四个群组，得出最小的 Davies-Bouldin 指数 (DBI)；开发了群组的示意图，其中 SOM 的原型向量通过 k-means 算法进行细分。</li>
+</ol>
+<ul>
+<li>聚类 1
+<ul>
+<li>包括 2004-2008 年的水质数据</li>
+<li>TN 浓度较低 (1.29 mg/L)，COD<sub>Mn</sub> 达到 2.90 mg/L</li>
+</ul></li>
+<li>聚类 2
+<ul>
+<li>包括 2010-2018 年的水质数据</li>
+<li>NH<sub>3</sub>–N 和 COD<sub>Mn</sub> 值相对较低</li>
+</ul></li>
+<li>聚类 3
+<ul>
+<li>在 1991-1997 年和 2000-2003 年表现出相对较好的水质</li>
+</ul></li>
+<li>聚类 4
+<ul>
+<li>水质条件与第 1 组相似，TP 高达 0.13 mg/L</li>
+</ul></li>
+</ul>
+<ol start="2" style="list-style-type: decimal">
+<li>根据不同神经细胞的响应，分析各个水质参数的分布模式及其对整个 SOM 的贡献。</li>
+</ol>
+<ul>
+<li>TN 和 BOD<sub>5</sub> 呈现出从左到右显著递增的趋势</li>
+<li>COD<sub>Mn</sub>、NH<sub>3</sub>-N 和 TP 呈现相同的分布模式：在 SOM 网络中，左下角的黄色神经元记录的兴奋性较高，右上角的蓝色神经元的兴奋性最低。</li>
+<li>pH 值的分布呈现出从右下角向左上中心的下降趋势</li>
+</ul>
+<ol start="3" style="list-style-type: decimal">
+<li>根据这些结果和《中国地表水环境质量标准》对水质参数的等级进行评价。</li>
+</ol>
+<ul>
+<li>第 3 组的 COD<sub>Mn</sub> 为 I 级，其余各组的 COD<sub>Mn</sub> 为 II 级</li>
+<li>所有组的 BOD<sub>5</sub> 和 NH<sub>3</sub>-N 分别为 I 级和 II 级水质</li>
+<li>组 2 的 TN 处于 V 级，而其余组的 TN 处于 IV 级</li>
+<li>组 1 和组 4 的 TP 均处于 V 级，高于其余两个组 (IV 级)</li>
+</ul>
+</div>
+</div>
+<div id="讨论" class="section level1">
+<h1>讨论</h1>
+<div id="水质的变化特征及其主要影响源" class="section level2">
+<h2>水质的变化特征及其主要影响源</h2>
+<p>洞庭湖水养分浓度在过去几十年中显著增加，表明水质逐渐恶化。</p>
+<ul>
+<li>流入洞庭湖的污染物使水质恶化
+<ul>
+<li>一般来说，排放到湖泊的污染物会显著影响其水质</li>
+<li>污水排放导致洞庭湖污染趋势增加，1996-2018 年间变化高达 65%</li>
+</ul></li>
+<li>若干水质参数在 2010 年左右达到峰值后呈现下降趋势
+<ul>
+<li>2010 年上升的原因分析：经济发展、农业发展、水质管理技术和水平</li>
+<li>2010 后下降的原因分析：政府政策、水质管理技术和水平</li>
+</ul></li>
+<li>BOD<sub>5</sub> 浓度 2003 年后上升的原因；在 2016 年左右呈下降趋势的原因</li>
+</ul>
+</div>
+<div id="水文条件对洞庭湖水质的影响" class="section level2">
+<h2>水文条件对洞庭湖水质的影响</h2>
+<p>水文因素和水质参数之间的相关性检验证实：水文条件的变化会显著影响洞庭湖的水质。</p>
+<ul>
+<li>TN、COD<sub>Mn</sub>、BOD<sub>5</sub> 与出水量 (water discharge)、悬沙量 (suspended sediment discharge)、水位 (water level) 显著相关</li>
+<li>三峡工程的运行对洞庭湖水文条件造成重大影响
+<ul>
+<li>这会影响水文条件与水养分之间的动态平衡，增加对水环境的风险</li>
+<li>大坝水库中的养分截留对下游水体至关重要，这会影响 N 和 P 通量的大小和形态</li>
+<li>在 TGD 后时期出现了更多的突变点</li>
+</ul></li>
+</ul>
+<p>水文条件变化影响洞庭湖水质的机理如下：</p>
+<ol style="list-style-type: lower-alpha">
+<li>由于颗粒磷是长江悬浮泥沙的主要形式，三峡工程运行时泥沙负荷和 (养分) 稀释效应的显著下降导致总磷浓度下降。</li>
+<li>洞庭湖在后 TGD 时期经历了更多的干旱年份，这种从干旱到洪水的急剧转变以及三峡工程的流量调节导致瞬时地表径流，从而大量养分 (尤其是 NO<sub>3</sub><sup>-</sup>-N) 从河流流入湖泊。</li>
+<li>带负电荷的沉积物颗粒吸收氨氮，降低水中的氮含量；这表明 NH<sub>3</sub>-N 浓度与悬浮泥沙排放量呈负相关。较低的沉积物负荷可以减少 NH<sub>3</sub>-N 浓度的影响。</li>
+<li>三峡工程开工后水位相对较低，水停留时间较长。这些条件促使大量有机污染物从沉积物中释放到水中，从而增加了洞庭湖 COD<sub>Mn</sub> 的浓度。</li>
+</ol>
+</div>
+<div id="水质评价对湖泊管理的意义" class="section level2">
+<h2>水质评价对湖泊管理的意义</h2>
+<p>聚类中 TN 和 TP 的浓度范围为 IV-V 级，不满足饮用水 III 级标准。</p>
+<ul>
+<li>导致湖泊明显富营养化，洞庭湖生态功能下降。</li>
+<li>随着污染物输入量的增加，加上水文调控不力，洞庭湖的自净功能可能退化，生态风险增大。</li>
+</ul>
+<p>严格控制过度的外部营养负荷和有效的水文调节对于洞庭湖的恰当管理至关重要。</p>
+<ul>
+<li>有针对性地控制水流状态可以提高水养分的水库保留效率，从而减少其下游转移。</li>
+<li>通过操纵大坝的运行产生人工湍流可以缓解下游湖泊的富营养化。</li>
+<li>这种水库管理策略可以与农业管理相结合，包括精确施用化肥、生物农药和节水灌溉方法，只增加一点成本而增加作物产量。</li>
+</ul>
+</div>
+</div>
+<div id="方法" class="section level1">
+<h1>方法</h1>
+<ul>
+<li>时间尺度：1991 - 2018</li>
+<li>空间尺度：洞庭湖 × 三峡大坝（TGD）落成前后</li>
+<li>分析
+<ul>
+<li>Shapiro–Wilk normality test</li>
+<li>logarithmic transformation</li>
+<li>t-test</li>
+<li>Mann–Kendall (M–K) test: 分析时间序列数据趋势，检测水质参数突变点</li>
+<li>self-organising map (SOM): 水质评价</li>
+<li>k-means algorithm
+<ul>
+<li>Davies–Bouldin clustering index</li>
+</ul></li>
+</ul></li>
+<li>水质指标
+<ul>
+<li>pH</li>
+<li>permanganate index (COD<sub>Mn</sub>) 高锰酸盐指数，反映有机污染</li>
+<li>ammonia nitrogen (NH<sub>3</sub>–N) 氨氮，控制水生植被出现频率的营养指标</li>
+<li>total nitrogen (TN) 湖泊富营养化的关键指标</li>
+<li>total phosphorus (TP) 湖泊富营养化的关键指标</li>
+<li>the five-day biochemical oxygen demand (BOD<sub>5</sub>) 五天生化需氧量，反映生物降解潜力</li>
+</ul></li>
+<li>水质分类标准：《中国地表水环境质量标准》(GB 3838-2002，中国国家环境保护总局)</li>
+<li>数据
+<ul>
+<li>水质数据：China National Environmental Monitoring Centre (<a href="http://www.cnemc.cn/" class="uri">http://www.cnemc.cn/</a>)</li>
+</ul></li>
+<li>数据处理软件
+<ul>
+<li>PASW 19 software (IBM SPSS Inc., Chicago, U.S.A.)</li>
+<li>MATLAB: SOM toolbox</li>
+</ul></li>
+</ul>
+<div id="mannkendall-mk-test" class="section level2">
+<h2>Mann–Kendall (M–K) test</h2>
+<p>分析时间序列数据的趋势并检测水质参数的突变点 <span class="citation">(<a href="#ref-tuppad2010AssessingBMPEffectiveness" role="doc-biblioref">Tuppad, Santhi, and Srinivasan 2010</a>)</span>。</p>
+<blockquote>
+<p>Mann-Kendall (MK) test (Mann 1945, Kendall 1975, Gilbert 1987) 目的是统计评估感兴趣的变量是否存在随时间的单调上升或下降趋势。单调上升（下降）趋势意味着变量随时间持续增加（减少），但该趋势可能是线性的，也可能不是线性的。<br />
+MK 检验可以代替参数化的线性回归分析，该分析可用来测试估计的线性回归的斜率是否不为零。回归分析要求拟合回归线的残差为正态分布；而 MK 检验不需要这一假设，即 MK 检验是一种非参数（无分布）检验。<br />
+Hirsch, Slack 和 Smith (1982, p. 107) 指出，最好将 MK 检验看作是一种探索性分析，最适合用来确定变化显著或幅度较大的站点，并对这些结果进行量化。<br />
+当不存在趋势时，随着时间的推移获得的测量值（观测值或数据）是独立的且同分布的。独立性假设要求样本之间的时间足够大，以便在不同时间收集的测量值之间没有相关性。<br />
+—— <span class="citation">(<a href="#ref-pnnlMannKendallTestMonotonic" role="doc-biblioref">PNNL n.d.</a>)</span></p>
+</blockquote>
+<div id="趋势分析" class="section level3">
+<h3>趋势分析</h3>
+<ul>
+<li><span class="math inline">\(H_0\)</span> 假设：数据样本是独立同分布的，在整个时间序列中没有呈现趋势</li>
+<li><span class="math inline">\(H_1\)</span> 假设：时间序列中存在趋势</li>
+</ul>
+<p><span class="math display">\[S = \sum^{n-1}_{i=1} \sum^n_{j=i+1} {\rm{sgn}} {(x_j - x_i)}\]</span></p>
+<p>其中 <span class="math inline">\(n\)</span> 是样本量/观测次数，<span class="math inline">\(x_j\)</span>、<span class="math inline">\(x_i\)</span> 分别是时间序列 <span class="math inline">\(j\)</span> 和 <span class="math inline">\(i\)</span> (<span class="math inline">\(j&gt;i\)</span>) 的观测值。如果 <span class="math inline">\(S\)</span> 为正数，则较晚获得的观测值往往大于较早的观测值。如果 <span class="math inline">\(S\)</span> 为负数，则较晚进行的观察往往小于较早进行的观察 <span class="citation">(<a href="#ref-pnnlMannKendallTestMonotonic" role="doc-biblioref">PNNL n.d.</a>)</span>。</p>
+<p><span class="math display">\[{\rm{sgn}} {(x_j - x_i)} =
+  \begin{cases}
+      1, x_j - x_i &gt; 0 \\[1ex]
+      0, x_j - x_i = 0 \\[1ex]
+     -1, x_j - x_i &lt; 0
+  \end{cases}
+\]</span></p>
+<p>当 <span class="math inline">\(n &gt; 10\)</span> <span class="citation">(<a href="#ref-pnnlMannKendallTestMonotonic" role="doc-biblioref">PNNL n.d.</a>)</span>，使用正态渐近检验 <span class="citation">(<a href="#ref-gilbert1987StatisticalMethodsEnvironmental" role="doc-biblioref">Gilbert 1987, 211</a>)</span>，<span class="math inline">\(S\)</span> 的方差计算如下 <a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a>：</p>
+<p><span class="math display">\[Var (S) = \frac{n(n-1)(2n+5)-\sum^n_{m=1}{t_m(m-1)(2m+5)}}{18}\]</span></p>
+<p>其中，<span class="math inline">\(m\)</span> 是样本组 (sample groups) 的数量，<span class="math inline">\(t_m\)</span> 是每个样本组的样本量。该公式的其它版本：</p>
+<ol style="list-style-type: decimal">
+<li>出自 <span class="citation">Bastia and Equeenuddin (<a href="#ref-bastia2016SpatiotemporalVariationWater" role="doc-biblioref">2016</a>)</span>，其引用 <span class="citation">Yue, Pilon, and Cavadias (<a href="#ref-yue2002PowerMannKendall" role="doc-biblioref">2002</a>)</span>，并引用 <span class="citation">Mann (<a href="#ref-mann1945NonparametricTestsTrend" role="doc-biblioref">1945</a>)</span> 和 <span class="citation">Kendall (<a href="#ref-kendall1975RankCorrelationMethods" role="doc-biblioref">1975</a>)</span>。其中 <span class="math inline">\(n\)</span> 是数据点的数量，<span class="math inline">\(m\)</span> 是绑定组 (tied groups) 的数量，<span class="math inline">\(t_i\)</span> 是抽取样本 <span class="math inline">\(i\)</span> 的绑定数量。</li>
+</ol>
+<p><span class="math display">\[Var (S) = \frac{n(n-1)(2n+5)-\sum^m_{i=1}{t_i(i)(i-1)(2i+5)}}{18}\]</span></p>
+<ol start="2" style="list-style-type: decimal">
+<li>出自 <span class="citation">Yue, Pilon, and Cavadias (<a href="#ref-yue2002PowerMannKendall" role="doc-biblioref">2002</a>)</span>，其引用 <span class="citation">Mann (<a href="#ref-mann1945NonparametricTestsTrend" role="doc-biblioref">1945</a>)</span> 和 <span class="citation">Kendall (<a href="#ref-kendall1975RankCorrelationMethods" role="doc-biblioref">1975</a>)</span>。另本文献所引用的 <span class="citation">Mostowik et al. (<a href="#ref-mostowik2019RunoffTrendsChanging" role="doc-biblioref">2019</a>)</span> 引用了 <span class="citation">Yue et al. (<a href="#ref-yue2002InfluenceAutocorrelationAbility" role="doc-biblioref">2002</a>)</span> 亦与此一致。其中 <span class="math inline">\(t_i\)</span> 是范围 <span class="math inline">\(i\)</span> 的绑定数。</li>
+</ol>
+<p><span class="math display">\[Var (S) = \frac{n(n-1)(2n+5)-\sum^n_{i=1}{t_ii(i-1)(2i+5)}}{18}\]</span></p>
+<ol start="3" style="list-style-type: decimal">
+<li>出自 <span class="citation">Gilbert (<a href="#ref-gilbert1987StatisticalMethodsEnvironmental" role="doc-biblioref">1987</a>)</span> (page 211, Section 16.4.2) <span class="citation">(<a href="#ref-pnnlMannKendallTestMonotonic" role="doc-biblioref">PNNL n.d.</a>)</span>。<span class="math inline">\(g\)</span> 是绑定组的数量，<span class="math inline">\(t_p\)</span> 是第 <span class="math inline">\(p\)</span> 组中的观察数。<span class="citation">Kendall (<a href="#ref-kendall1975RankCorrelationMethods" role="doc-biblioref">1975</a>)</span> (p. 55, formula 4.4) 描述的方程与此含义一致。</li>
+</ol>
+<p><span class="math display">\[Var (S) = \frac{n(n-1)(2n+5)-\sum^g_{p=1}{t_p(t_p-1)(2t_p+5)}}{18}\]</span></p>
+<blockquote>
+<p>当由于相等的值或未检测到数据中存在绑定组 (ties) 时，通过 Helsel (2005, p. 191) 中描述的绑定 (tie) 校正方法调整 <em>VAR</em>(<em>S</em>)。<br />
+—— <span class="citation">(<a href="#ref-pnnlMannKendallTestMonotonic" role="doc-biblioref">PNNL n.d.</a>)</span></p>
+</blockquote>
+<p>本文献所引用的 <span class="citation">Tuppad, Santhi, and Srinivasan (<a href="#ref-tuppad2010AssessingBMPEffectiveness" role="doc-biblioref">2010</a>)</span> 没有写明公式，引用了其它文献 <a href="#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a>。至此，本文献所采用的 <span class="math inline">\(Var(S)\)</span> 的计算公式与其直接引用的文献中的公式并不一致，且并未说明理由，推测本文献中的公式可能有误。目前认为 (3) 的公式为正确形式，具体可详细查证 <span class="citation">Kendall (<a href="#ref-kendall1975RankCorrelationMethods" role="doc-biblioref">1975</a>)</span> 中的推导过程 <a href="#fn3" class="footnote-ref" id="fnref3"><sup>3</sup></a>。</p>
+<p>标准正态检验统计量 <span class="math inline">\(Z_c\)</span> 计算如下：</p>
+<p><span class="math display">\[Z_c =
+  \left\{
+  \begin{array}{c}
+    \frac{S-1}{\sqrt{var(S)}} &amp; S &gt; 0 \\[1ex]
+    0 &amp; S = 0 \\[1ex]
+    \frac{S+1}{\sqrt{var(S)}} &amp; S &lt;0
+  \end{array}
+  \right.
+\]</span></p>
+<p><span class="math display">\[\beta = Median (\frac{x_i - x_j}{i-j}) \quad \forall \; 1 &lt; j &lt; i &lt; n\]</span></p>
+<p><span class="math inline">\(\beta\)</span> 表示斜率，<span class="math inline">\(Median\)</span> 表示中位值，<span class="math inline">\(β\)</span> 为正值表示“上升趋势”，<span class="math inline">\(β\)</span> 为负值表示“下降趋势” <a href="#fn4" class="footnote-ref" id="fnref4"><sup>4</sup></a>。参考 Theil (1950) 和 Sen (1968) (Theil-Sen estimator) <span class="citation">(<a href="#ref-yue2002PowerMannKendall" role="doc-biblioref">Yue, Pilon, and Cavadias 2002, 270</a>)</span>。</p>
+<p><span class="math inline">\(Z_c\)</span> 的正（负）值表示数据趋于增加 (减少) 随着时间的推移。如果 <span class="math inline">\(H_0\)</span> 为真，<span class="math inline">\(Z\)</span> 统计量为标准正态分布。<span class="math inline">\(|Z_c| &gt; Z_{1-\alpha/2}\)</span> 标准正态偏差，即设定 <span class="math inline">\(\alpha = 0.05\)</span> ，<span class="math inline">\(|Z_c| &gt; 1.96\)</span> 时，拒绝 <span class="math inline">\(H_0\)</span>。</p>
+<p>重要文献：</p>
+<ul>
+<li>Mann, H.B. 1945. <a href="http://danida.vnu.edu.vn/cpis/files/Refs/PCAs/Mann_1945_NONPARAMETRIC%20TESTS%20AGAINST%20TREND.pdf">Non-parametric tests against trend</a>, Econometrica 13(3):245-259.<br />
+🗈 目前没有看到 <span class="math inline">\(Var(S)\)</span> 的明确公式</li>
+<li>Kendall, M.G. 1975. Rank Correlation Methods, 4th edition, Charles Griffin, London.<br />
+🗈 有 <span class="math inline">\(Var(S)\)</span> 的推导过程及公式</li>
+<li>Gilbert, R.O. 1987 . <a href="https://www.osti.gov/biblio/7037501">Statistical Methods for Environmental Pollution Monitoring</a>, Wiley, NY. pp. 208-213.<br />
+🗈 包含示例与解释</li>
+</ul>
+</div>
+<div id="突变分析" class="section level3">
+<h3>突变分析</h3>
+<p><span class="math display">\[S_k = \sum_{i=1}^{k} \sum_{j=1}^{i-1} {\alpha_{i,j}}\]</span></p>
+<p><span class="math display">\[\alpha_{i,j} =
+  \left\{
+    \begin{array}{l}
+    1 &amp; x_i &gt; x_j \\
+    0 &amp; x_i \leq x_j
+    \end{array}
+  \right.
+  (1 \leq j \leq i)
+\]</span></p>
+<p><span class="math display">\[UF_k = \frac{|S_k - E(S_k)|}{\sqrt{{\rm{var}}(S_k)}}\]</span></p>
+<p><span class="math display">\[E(S_k) = \frac{k(k+1)}{4}\]</span></p>
+<p><span class="math display">\[Var(S_k) = \frac{k(k+1)(2k+5)}{72}\]</span></p>
+<p>其中，<span class="math inline">\(UF_k\)</span> 遵循标准正态分布，并构成正向序列曲线 (forward sequence curve)。类似于逆行时间序列 (retrograde time series) 的程序用于计算统计量 <span class="math inline">\(UB_k\)</span> 的反向序列 (backward sequence)。通过在图表上绘制 <span class="math inline">\(UF_k\)</span> 和 <span class="math inline">\(UB_k\)</span> 序列，得到了两条虚线。<span class="math inline">\(UF_k\)</span> 和 <span class="math inline">\(UB_k\)</span> 的序列线在临界线 <span class="math inline">\(±U_{α/2}\)</span> 之间的交点对应于突变点。</p>
+</div>
+</div>
+<div id="self-organising-map-som" class="section level2">
+<h2>self-organising map (SOM)</h2>
+<p>一种无监督人工神经网络方法，可以通过非线性映射在低维点中表达多维数据。</p>
+<p>SOM 包含竞争层和输入层，可以将任意维数的向量数据集划分为与层中神经元数量一样多的类 <span class="citation">(<a href="#ref-kohonen2013EssentialsSelforganizingMap" role="doc-biblioref">Kohonen 2013</a>)</span>。神经元以二维拓扑结构排列，从而使该层能够表示分布并形成数据集拓扑结构的二维近似。使用 MATLAB 处理。</p>
+<p>&lt;没看懂，待补充……&gt;</p>
+<!-- 公式没看懂，算法没理解，暂略 -->
+<hr />
+</div>
+</div>
+<div id="笔记" class="section level1 unnumbered">
+<h1>笔记</h1>
+<div id="疑问" class="section level2">
+<h2>疑问</h2>
+<ol style="list-style-type: decimal">
+<li><p>统计方法</p>
+<ul>
+<li>引用来源不够清晰</li>
+<li>计算公式的介绍不够清晰
+<ul>
+<li><span class="math inline">\(UF_k\)</span> 和 <span class="math inline">\(UB_k\)</span> 的本质是什么，或者说生态学意义是什么？为什么交点即是突变点？</li>
+</ul></li>
+<li>聚类分析的目的和意义是什么？</li>
+</ul></li>
+<li><p>在结果中</p>
+<ul>
+<li>回归 + t 检验 + M-K 检验分析变化趋势和差异是否合适？
+<ul>
+<li>Fig. 2 中回归有何用途？在方法和结果中似乎并未描述</li>
+<li>Table 2. 中 M-K 检验与 Table 3 中 t 检验的结果在 3.1 的描述中混用，是否合适？</li>
+<li>回归的 <span class="math inline">\(p\)</span> 值、t 检验的 <span class="math inline">\(p\)</span> 值和 M-K 检验的 <span class="math inline">\(Z\)</span> 值存在什么区别；三者显示的结果似乎并不完全一致，如何解释？</li>
+</ul></li>
+<li>突变点的意义是什么？
+<ul>
+<li>如何结合置信区间查看突变趋势？</li>
+<li>突变点变多意味着什么？</li>
+<li>突变点对应的纵坐标值大于 0 或小于 0 有何区别？</li>
+</ul></li>
+<li>如何解读 Fig. 4(b) “图平面上神经元的 SOM 聚类结果”，以及 Fig. 5 “SOM 的组件面板显示了水质参数对每个 SOM 神经元的贡献”？</li>
+</ul></li>
+<li><p>原文中的以下句子表达的含义似有不妥或存在歧义？</p>
+<blockquote>
+<p>Except for UBk of the pH between 2004 and 2008, all the UFk and UBk values were within the 95% confidence interval, showing an initial decreasing and subsequent increasing trend.</p>
+</blockquote></li>
+<li><p>结果与讨论似乎有点脱节。</p>
+<ul>
+<li>结果似乎重点不够突出</li>
+<li>讨论中含有较大篇幅的独立于结果的推测，讨论中还含有未表明数据出处的、新的结果 (4.1, 4.2)？</li>
+<li>很多结果似乎没有被讨论？特别是“突变点”和“水质”的结果讨论显得不够，而“水质参数的分布模式及其对整个 SOM 的贡献”的结果未见讨论。</li>
+</ul></li>
+<li><p>结论中既有结果，也有讨论中的推论，似乎不是对结果的概括和总结？</p></li>
+</ol>
+</div>
+<div id="启发" class="section level2">
+<h2>启发</h2>
+<ol style="list-style-type: decimal">
+<li>知道上游大坝、污染负荷影响水质，但各自的影响分别是多大？如何量化？
+<ul>
+<li>构建 (结构方程/混合效应) 模型，包含：排水量、停留时间、沉积物、悬浮颗粒等影响水质的潜在因素。</li>
+</ul></li>
+<li>什么样的措施/什么样的临界值可以更好地权衡水利用途与水质？</li>
+<li>分析形成突变点的原因？</li>
+<li>分析水质不达标的主要来源，以及这些来源的来源？</li>
+</ol>
+<div id="refs" class="references csl-bib-body hanging-indent">
+<div id="ref-bastia2016SpatiotemporalVariationWater" class="csl-entry">
+Bastia, Fakira, and Sk. Md. Equeenuddin. 2016. <span>“Spatio-Temporal Variation of Water Flow and Sediment Discharge in the <span>Mahanadi River</span>, <span>India</span>.”</span> <em>Global and Planetary Change</em> 144 (September): 51–66. <a href="https://doi.org/10.1016/j.gloplacha.2016.07.004">https://doi.org/10.1016/j.gloplacha.2016.07.004</a>.
+</div>
+<div id="ref-gilbert1987StatisticalMethodsEnvironmental" class="csl-entry">
+Gilbert, Richard O. 1987. <span>“Statistical <span>Methods</span> for <span>Environmental Pollution Monitoring</span>.”</span> PNL-4660. <span>Pacific Northwest National Lab. (PNNL), Richland, WA (United States)</span>. <a href="https://www.osti.gov/biblio/7037501">https://www.osti.gov/biblio/7037501</a>.
+</div>
+<div id="ref-kendall1975RankCorrelationMethods" class="csl-entry">
+Kendall, M. G. 1975. <em>Rank Correlation Methods</em>. 4th ed. Rank Correlation Methods. <span>London</span>: <span>Griffin</span>.
+</div>
+<div id="ref-kohonen2013EssentialsSelforganizingMap" class="csl-entry">
+Kohonen, Teuvo. 2013. <span>“Essentials of the Self-Organizing Map.”</span> <em>Neural Networks</em>, Twenty-fifth <span>Anniversay Commemorative Issue</span>, 37 (January): 52–65. <a href="https://doi.org/10.1016/j.neunet.2012.09.018">https://doi.org/10.1016/j.neunet.2012.09.018</a>.
+</div>
+<div id="ref-mann1945NonparametricTestsTrend" class="csl-entry">
+Mann, Henry B. 1945. <span>“Nonparametric <span>Tests Against Trend</span>.”</span> <em>Econometrica</em> 13 (3): 245–59. <a href="https://doi.org/10.2307/1907187">https://doi.org/10.2307/1907187</a>.
+</div>
+<div id="ref-mostowik2019RunoffTrendsChanging" class="csl-entry">
+Mostowik, Karolina, Janusz Siwek, Marta Kisiel, Kinga Kowalik, Magdalena Krzysik, Joanna Plenzler, and Bartłomiej Rzonca. 2019. <span>“Runoff Trends in a Changing Climate in the <span>Eastern Carpathians</span> (<span>Bieszczady Mountains</span>, <span>Poland</span>).”</span> <em>CATENA</em> 182 (November): 104174. <a href="https://doi.org/10.1016/j.catena.2019.104174">https://doi.org/10.1016/j.catena.2019.104174</a>.
+</div>
+<div id="ref-pnnlMannKendallTestMonotonic" class="csl-entry">
+PNNL. n.d. <span>“Mann-<span>Kendall Test For Monotonic Trend</span>.”</span> <span>Pacific Northwest National Laboratory: Visual Sample Plan</span>. Accessed September 14, 2022. <a href="https://vsp.pnnl.gov/help/vsample/design_trend_mann_kendall.htm">https://vsp.pnnl.gov/help/vsample/design_trend_mann_kendall.htm</a>.
+</div>
+<div id="ref-tuppad2010AssessingBMPEffectiveness" class="csl-entry">
+Tuppad, Pushpa, Chinnasamy Santhi, and Raghavan Srinivasan. 2010. <span>“Assessing <span>BMP</span> Effectiveness: Multiprocedure Analysis of Observed Water Quality Data.”</span> <em>Environmental Monitoring and Assessment</em> 170 (1): 315–29. <a href="https://doi.org/10.1007/s10661-009-1235-8">https://doi.org/10.1007/s10661-009-1235-8</a>.
+</div>
+<div id="ref-yue2002PowerMannKendall" class="csl-entry">
+Yue, Sheng, Paul Pilon, and George Cavadias. 2002. <span>“Power of the <span>Mann</span>–<span>Kendall</span> and <span>Spearman</span>’s Rho Tests for Detecting Monotonic Trends in Hydrological Series.”</span> <em>Journal of Hydrology</em> 259 (1): 254–71. <a href="https://doi.org/10.1016/S0022-1694(01)00594-7">https://doi.org/10.1016/S0022-1694(01)00594-7</a>.
+</div>
+<div id="ref-yue2002InfluenceAutocorrelationAbility" class="csl-entry">
+Yue, Sheng, Paul Pilon, Bob Phinney, and George Cavadias. 2002. <span>“The Influence of Autocorrelation on the Ability to Detect Trend in Hydrological Series.”</span> <em>Hydrological Processes</em> 16 (9): 1807–29. <a href="https://doi.org/10.1002/hyp.1095">https://doi.org/10.1002/hyp.1095</a>.
+</div>
+</div>
+</div>
+</div>
+<div class="footnotes footnotes-end-of-document">
+<hr />
+<ol>
+<li id="fn1"><p>公式与原始文献有所出入，需进一步查看当前文献所参考的来源，比较前后公式的差异。<a href="#fnref1" class="footnote-back">↩︎</a></p></li>
+<li id="fn2"><p>尚未考证其它文献中的公式。<a href="#fnref2" class="footnote-back">↩︎</a></p></li>
+<li id="fn3"><p>需查看前五章。<a href="#fnref3" class="footnote-back">↩︎</a></p></li>
+<li id="fn4"><p><a href="https://www.jianshu.com/p/eae362946ea9">Mann-Kendall趋势检验算法</a><a href="#fnref4" class="footnote-back">↩︎</a></p></li>
+</ol>
+</div>
