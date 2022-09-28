@@ -1,0 +1,70 @@
+---
+title: "∑ 洞庭湖水质的影响因素"
+author: "sanchufy"
+date: '2022-09-17'
+slug: water quality of dongting
+categories: 
+  - 综述
+tags:
+  - 水文
+lastmod: '`r strftime(as.POSIXlt(Sys.time(), Sys.timezone()), "%Y-%m-%dT%H:%M:%S%z")`'
+description: 小结洞庭湖的水质评价及其影响因素
+bibliography: ../../../static/bib/scholar.bib
+link-citations: yes
+disable_mathjax: yes
+features:
+  - -toc
+  - -number_sections
+  - -sidenotes
+---
+
+综述文献，一个洞庭湖水质影响因素的概念模型图：
+
+::: {.fullwidth .fullscroll}
+
+```{r, echo=FALSE}
+DiagrammeR::grViz("dongting.gv", width = 1200, height = 1305)
+```
+
+
+```{r, echo=FALSE, eval=FALSE}
+# https://github.com/rich-iannone/DiagrammeR/issues/91
+# DiagrammeR::add_mathjax()
+gv$dependencies <- list(htmltools::htmlDependency(
+        name = "svg_mathjax2", version = "0.1.0", 
+        src = c(href = 
+"https://fastly.jsdelivr.net/gh/timelyportfolio/svg_mathjax2@master/"), 
+# https://cdn.jsdelivr.net/gh/timelyportfolio/svg_mathjax2@master/
+# https://cdn.statically.io/gh/timelyportfolio/svg_mathjax2/40a7c5a8/
+# /js/mathjax/0.1.0/
+        script = "svg_mathjax2.js"))
+
+htmltools::browsable(htmltools::tagList(
+    gv, htmltools::tags$script(src =
+"https://mathjax.rstudio.com/2.7.2/MathJax.js?config=TeX-AMS-MML_SVG"),
+# http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_SVG
+    htmlwidgets::onStaticRenderComplete(
+"setTimeout(function(){new Svg_MathJax().install()}, 4000);")))
+```
+
+:::
+
+注：淡紫色 (`orchid`) 表示增加或正相关；蓝色 (`blue`/`skyblue`) 表示下降或负相关；灰色表示无显著变化或暂不明确，或连线交叉。
+
+---
+
+# 来源文献
+
+```{r, echo=FALSE, warning=FALSE, message=FALSE, results='asis'}
+source("../readbib.R")
+bib[key = "geng2021EvaluationVariationTrends"]
+cat("<br>")
+bib[key = "geng2021SpatiotemporalWaterQuality"]
+```
+
+# 其它参考
+
+- 中国国家环境保护总局. 2002. 《[地表水环境质量标准](https://www.mee.gov.cn/ywgz/fgbz/bz/bzwb/shjbh/shjzlbz/200206/W020061027509896672057.pdf)》(GB 3838-2002). 2002-06-01 实施.
+- 中国水网. 2022. [BOD为何选用5日作为标准](https://www.h2o-china.com/news/333888.html). 2022-09-23 访问.
+- Wikipedia: [Biochemical oxygen demand](https://en.wikipedia.org/wiki/Biochemical_oxygen_demand)
+- Miranda, L. E. 2017. [Chapter 7 : Water Regime](https://www.friendsofreservoirs.com/science/best-management-practices-manual/chapter-7-water-regime/). In: Reservoir fish habitat management. Lightning Press, Totowa, New Jersey. 306 pp.

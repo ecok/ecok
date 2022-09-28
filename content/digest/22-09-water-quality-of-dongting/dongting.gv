@@ -1,0 +1,375 @@
+digraph 'Conceptual Model of Dongting' {
+
+  # 'graph' statement
+  graph [layout = dot, rankdir = LR, 
+         fontname = 'Candara,Source Han Serif CN,Times,serif', newrank = true,
+         compound=true]
+       //fontsize = 10, overlap = true, splines=ortho, concentrate=true,
+  
+  node [fontname = 'Candara,Source Han Serif CN,Times,serif']
+  # 'node' statements
+  node [shape = box, style = rounded]
+  WQ [label = <<b>水质<br/>Water quality</b>>, penwidth=2, fontsize=16.0]
+  HC [label = <<b>水文条件<br/>Hydrological conditions</b>>, fontsize=16.0]
+  WwD[label = <<b>废水排放<br/>Wastewater discharge</b>>, fontsize=16.0]
+             //污染负荷 pollution load, PL
+             //污水排放 sewage effluents
+  DR [label = <<b>大坝调节<br/>Dams regulation</b>>, fontsize=16.0] 
+                       //Upstream dams
+  EF [label = <<b>生态功能<br/>Ecological function</b>>, fontsize=16.0]
+  ES [label = <<b>生态服务<br/>Ecological service</b>>, fontsize=16.0]
+  EPr[label = <<b>生态压力<br/>Ecological pressure</b>>, fontsize=16.0]
+  MP [label = <<b>管理实践<br/>Management practice</b>>, fontsize=16.0]
+  AA [label= '人为活动\nAnthropogenic activities']
+  
+  //node [shape = record, fixedsize = true, width = 2, height = 0.6]
+  // 水质
+  pH [shape=none, margin=0, label = <
+    <table border="0" cellborder="1" cellspacing="0" cellpadding="4">
+      <tr><td width="20" bgcolor="grey" port="l1">-</td>
+          <td width="110">pH 值</td>
+          <td width="20" bgcolor="grey">-</td></tr>
+    </table>>]
+  
+  COD[shape=none, margin=0, label = <
+    <table border="0" cellborder="1" cellspacing="0" cellpadding="4">
+    <tr><td width="20" bgcolor="grey" port="l1">-</td>
+        <td width="110"><font color="darkorchid">高锰酸盐指数<br/>COD<font point-size='9'><sub>Mn</sub></font></font></td>
+        <td bgcolor="skyblue">↓</td></tr>
+    </table>>]
+  
+  NH3[shape=none, margin=0, label = <
+    <table border="0" cellborder="1" cellspacing="0" cellpadding="4">
+    <tr><td width="20" bgcolor="grey" port="l1">-</td>
+        <td width="110">氨氮<br/>NH<font point-size='9'><sub>3</sub></font>-N</td>
+        <td bgcolor="skyblue">↓</td></tr>
+    </table>>]
+  
+  TN [shape=none, margin=0, label = <
+    <table border="0" cellborder="1" cellspacing="0" cellpadding="4">
+    <tr><td width="20" bgcolor="grey" port="l1">-</td>
+        <td width="110"><font color="darkorchid">总氮<br/>TN</font></td>
+        <td bgcolor="orchid">↑</td></tr>
+    </table>>]
+  
+  TP [shape=none, margin=0, label = <
+    <table border="0" cellborder="1" cellspacing="0" cellpadding="4">
+    <tr><td bgcolor="orchid" port="l1">↑</td>
+        <td width="110">总磷<br/>TP</td>
+        <td bgcolor="skyblue">↓</td></tr>
+    </table>>]
+  
+  BOD[shape=none, margin=0, label = <
+    <table border="0" cellborder="1" cellspacing="0" cellpadding="4">
+    <tr><td width="20" bgcolor="grey" port="l1">-</td>
+        <td width="110"><font color="darkorchid">五日生化需氧量<br/>BOD<font point-size='9'><sub>5</sub></font></font></td>
+        <td width="20" bgcolor="grey">-</td></tr>
+    </table>>]
+  
+  /*
+  pH [label = '{pH 值 | { - | - }}']
+  COD[label = '{高锰酸盐指数<br/>COD@_{Mn} | { pre | post}}'] 
+             // 高锰酸盐指数\n$\\rm{ COD_{Mn} }$
+  NH3[label = '{氨氮<br/>NH@_{3}-N | { pre | post}}']
+             // 氨氮\n$\\rm{ NH_3}{\\text -}N$
+  TN [label = '{总氮\nTotal N | { pre | post}}']
+  TP [label = '{总磷\nTotal P | { pre | post}}']
+  BOD[label = '{五日生化需氧量<br/>BOD@_{5} | { pre | post}}'] 
+                         // $\\rm{ BOD_5 }$
+  */
+  
+  //node [shape = invtrapezium, fixedsize = TRUE, height = 0.8, width = 2]
+  TGD[shape = none, label = <
+    <table border="0" cellborder="1" cellspacing="0">
+    <tr><td width="158" colspan="7" sides="LTR">Three Gorges Dam</td></tr>
+    <tr><td width="24" sides="T"></td>
+        <td width="110" colspan="5" sides="LR">三峡水坝</td>
+        <td width="24" sides="T"></td></tr>
+    <tr><td width="17" border="0"></td><td width="17" sides="T"></td>
+        <td width="30">pre</td>
+        <td width="30" sides="LRB">2003</td>
+        <td width="30">post</td>
+        <td width="17" sides="T"></td><td width="17" border="0"></td></tr>
+    </table>>]
+  
+  // 水文状况
+  WDi_1[shape=none, margin=0, label = <
+    <table border="0" cellborder="1" cellspacing="0" cellpadding="4">
+    <tr><td width="20" bgcolor="grey" port="l1">-</td>
+        <td width="110"><font color="blue">排水量<br/>Water discharge</font></td>
+        <td width="20" bgcolor="grey">-</td></tr>
+    </table>>]
+  
+  SSD[shape=none, margin=0, label = <
+    <table border="0" cellborder="1" cellspacing="0" cellpadding="4">
+    <tr><td width="20" bgcolor="grey" port="l1">-</td>
+        <td width="200"><font color="blue">悬浮沉积物排放量<br/>Suspended sediment discharge</font></td>
+        <td width="20" bgcolor="grey">-</td></tr>
+    </table>>]
+  
+  WL [shape=none, margin=0, label = <
+    <table border="0" cellborder="1" cellspacing="0" cellpadding="4">
+    <tr><td width="20" bgcolor="grey" port="l1">-</td>
+        <td width="110"><font color="blue">水位<br/>Water level</font></td>
+        <td width="20" bgcolor="grey">-</td></tr>
+    </table>>]
+  
+  SD [shape=none, margin=0, label = <
+    <table border="0" cellborder="1" cellspacing="0" cellpadding="4">
+    <tr><td width="20" bgcolor="grey" port="l1">-</td>
+        <td width="140"><font color="blue">沉积物沉积量<br/>Sediment deposition</font></td>
+        <td width="20" bgcolor="skyblue">↓</td></tr>
+    </table>>]
+  
+  PP [shape=none, margin=0, label = <
+    <table border="0" cellborder="1" cellspacing="0" cellpadding="4">
+    <tr><td width="20" bgcolor="grey" port="l1">-</td>
+        <td width="110"><font color="black">降雨量<br/>Precipitation</font></td>
+        <td width="20" bgcolor="grey">-</td></tr>
+    </table>>]
+  
+  NI [shape=none, margin=0, label = <
+    <table border="0" cellborder="1" cellspacing="0" cellpadding="4">
+    <tr><td width="20" bgcolor="grey" port="l1">-</td>
+        <td width="110"><font color="grey">氮输入<br/>N input</font></td>
+        <td width="20" bgcolor="grey">-</td></tr>
+    </table>>]
+  
+  PI [shape=none, margin=0, label = <
+    <table border="0" cellborder="1" cellspacing="0" cellpadding="4">
+    <tr><td width="20" bgcolor="orchid" port="l1">↑</td>
+        <td width="110"><font color="grey">磷输入<br/>P input</font></td>
+        <td width="20" bgcolor="skyblue">↓</td></tr>
+    </table>>]
+  
+  FV [shape=none, margin=0, label = <
+    <table border="0" cellborder="1" cellspacing="0" cellpadding="4">
+    <tr><td width="20" bgcolor="white" port="l1">-</td>
+        <td width="110"><font color="black">流速<br/>Flow velocity</font></td>
+        <td width="20" bgcolor="white">-</td></tr>
+    </table>>]
+  
+  node [shape = box, style = "", width=2.3]
+  IP [label='工业污染\nIndustrial pollution']
+  AP [label='农业污染\nAgricultural pollution']
+  DP [label='生活污染\nDomestic pollution']
+  NP [label='非点源污染\nNon-point source pollution']
+  FL [label='化肥\nFertiliser']
+  PC [label='农药\nPesticide']
+  SDc[label='污水排放\nSewage discharge']
+  
+  WR [label='水停留\nWater residence']
+  LC [label='光照条件\nLight conditions']
+  ST [label='沉积物捕获\nSediment trapping']
+  BC [label='生物化学循环\nBiogeochemical cycling']
+  PA [label='磷吸附\nPhosphorus adsorption']
+  SDe [label='沉积物的解吸\nSediments desorption'] //沉积物对水的解吸
+  NFi[label='固氮\nNitrogen fixation']
+  NCt[label='营养成分\nNutrient content']
+  NT [label='养分运输\nNutrient transportation']
+  NFl[label='养分通量\nNutrient fluxes']
+  WDi_2 [label='排水量\nWater discharge']
+  WE [label='水交换\nWater exchange']
+  SC [label='自净能力\nSelf-purification capacity']
+  TB [label='湍流\nTurbulence']
+  SS [label='悬浮物\nSuspended solids']
+  NCc[label='营养浓度\nNutrient concentration']
+  
+  node [width=2.7]
+  SDp[label='污水处理\nSewage disposal']
+  PD [label='无磷洗涤剂\nPhosphate-free detergent']
+  MFR[label='调控流态\nManipulating the flow regime']
+  MOD[label='调控大坝\nManipulating the dam']
+                    // Manipulating the operation of the dam
+  AM [label='农业管理\nAgricultural management']
+  PAF[label='精准施肥\nPrecise application of fertilisers']
+  BP [label='生物农药\nBiological pesticides']
+  WSI[label='节水灌溉\nWater-saving irrigation']
+ 
+  //node [width=2.4]
+  AW [label='农业用水\nAgriculture water utilization'] //agricultural production
+  TR [label='交通运输\nTransportation']
+  RC [label='游憩\nRecreation']
+  EP [label='能源生产\nEnergy production']
+  BM [label='生物多样性维持\nBiodiversity maintenance']
+  
+  WP [label='水净化\nWater purification']
+  CR [label='调节气候\nClimate regulation']
+  FC [label='防洪\nFlood control']
+  
+  BR [label='生物多样性减少\nBiodiversity reduction']
+  AB [label='藻华\nAlgal blooms']
+  DS [label='饮用水短缺\nDrinking water shortages']
+  
+  
+  # 'cluster' and 'edge' statements
+  // Water quality
+  subgraph cluster_quality {
+    peripheries=1
+    color = red
+    subgraph cluster_DAM {
+      peripheries=0
+      TGD
+    }
+    subgraph cluster_water {
+      peripheries=0
+      {pH COD NH3 TN TP BOD} -> WQ
+    }
+    {rank=same; BOD TP TN NH3 COD pH TGD}
+  }
+/*subgraph cluster_quality {
+    color = red
+    //控制排序将产生副作用：跨 cluster 的两个节点之间的单连线变成了双连线
+    {pH COD NH3 TN TP BOD} -> WQ [constraint=false] 
+    {rank=same; BOD -> TP -> TN -> NH3 -> COD -> pH -> TGD [style="invis"]}
+    TN -> WQ [style="invis"]
+  }
+*/
+  
+  // Hydrological conditions
+  subgraph cluster_hydro {
+    color = red
+    {WDi_1 SSD WL SD PP NI PI FV} -> HC
+  }
+  
+  {rank=same; FV -> PI -> NI -> PP -> SD -> WL -> SSD -> WDi_1 -> BOD [style="invis"]}
+  
+  // HC ~ WQ: by correlation analysis or references (citations)
+  node [shape=point, height=0.1, fillcolor="blue"]
+  a5; a7; b6; c5; c6; c7; c8; c9; e6; e7
+  node [fillcolor="orchid"]
+  c9; d6; dx
+  node [fillcolor="grey"]
+  d7
+  node [shape=point, height=0]
+  {rank=same; e0 e1 e2 e3 e4 e5 e6 e7 e8 e9 ex}
+  edge [dir=none, color="blue"] //arrowhead=none
+    a0 -> b0 -> c0 -> d0 -> e0 -> COD
+          b1 -> c1 -> d1 -> e1 -> NH3
+                c2 -> d2 -> e2 -> TN
+                      d3 -> e3 -> TP [color="orchid", penwidth=2]
+                            e4 -> BOD
+    a5 -> b5 -> c5 -> d5 -> e5 -> WDi_1
+    a7 -> b7 -> c7 -> d7
+                      d7 -> e7 [color="grey", penwidth=2]
+                            e7 -> WL
+          b6 -> c6 -> d6 
+                      d6 -> e6 [color="orchid", penwidth=2]
+                            e6 -> SSD
+                c8 -> d8 -> e8 -> PP
+                c9 -> d9 -> e9 -> NI [color="orchid", penwidth=2]
+                      dx -> ex -> PI [color="orchid", penwidth=2]
+                      d4 -> e4 [style ="invis"]
+    e0 -> e1 -> e2 -> e3 -> e4 -> e5 -> e6 -> e7 -> e8 -> e9 -> ex [color="white"]
+  edge [constraint=false]
+    a0 -> a5 -> a7
+    b1 -> b5 -> b6
+    c2 -> c5 -> c6 -> c7 -> c8
+                            c8 -> c9 [color="orchid", penwidth=2]
+                      
+    d3 -> d4 -> d5 -> d6 [color="orchid", penwidth=2]
+                      d6 -> d7 [color="grey", penwidth=2]
+                            d7 -> d8 -> d9 -> dx [color="orchid", penwidth=2]
+    e4 -> e5 -> e6 -> e7
+/*
+  {
+  edge [dir=none, constraint=false] //arrowhead=none
+  TN:l1:nw -> SSD:l1:nw [color="blue"] //负相关
+  COD:l1:nw -> WDi_1:l1:w [color="blue"]
+  COD:l1:sw -> WL:l1:nw [color="blue"]
+  BOD:l1:nw -> WL:l1:sw [color="blue"]
+  BOD:l1:sw -> SSD:l1:w [color="blue"]
+  //P 主要保留在大坝河的上段，从而导致洞庭湖中 TP 减少
+  TP:l1:nw -> PI:l1:w [color="orchid"]
+  //沉积物负荷的显著下降导致总磷浓度下降
+  TP:l1:sw -> SSD:l1:w [color="orchid"]
+  //营养物质由地表径流从江入湖
+  TN:l1:sw -> NI:l1:w [color="orchid"]
+  //带负电荷的沉积物颗粒吸收氨氮，降低水中的氮含量
+  NH3:l1:w -> SSD:l1:sw [color="blue"]
+  }
+*/
+  edge [dir=forward, color="black", constraint=true]
+  // Wastewater discharge
+  subgraph cluster_Waste {
+    color=darkslategray
+    {FL PC} -> AP
+    SDc -> {IP DP}
+    {IP AP DP NP} -> WwD [constraint=false]
+    {rank=same; NP -> DP -> AP -> IP [style="invis"]}
+    AP:ne -> WwD:sw [style="invis"]
+  }
+  
+  // Dam regulation
+  subgraph cluster_Dam {
+    color=darkslategray
+    {WR LC ST} -> BC
+    {PA SDe NFi} -> NCt
+    ST -> NFl:nw [color=gray50, penwidth=2]
+    NT -> NFl
+    {WDi_2 WE} -> SC
+    WR -> {SS NCc} [constraint=false, color=gray50, penwidth=2, headport=nw]
+    TB -> {SS NCc} [constraint=false]
+    {BC NCt NFl SC SS NCc} -> DR [constraint=false]
+    {rank=same; WE -> WDi_2 -> NFi -> SDe -> PA -> NT -> TB -> ST -> LC -> WR [style="invis"]}
+    {rank=same; SC -> NCt -> NFl -> NCc -> SS -> BC [style="invis"]}
+    LC -> BC [style="invis"]
+    NCc -> DR [style="invis"]
+  }
+  
+  subgraph cluster_EFS {
+    peripheries=0
+    
+    // Ecosystem function
+    subgraph cluster_function {
+      peripheries=1
+      color=darkslategray
+      EF -> {WP CR FC}
+    }
+    
+    // Ecosystem services
+    subgraph cluster_Service {
+      //_em1_[shape=plaintext, label=""]
+      peripheries=1
+      color=darkslategray
+      ES -> {AW TR RC EP BM}
+      //BM -> _em1_ [style="invis"]
+    }
+    
+    subgraph cluster_pressure {
+      peripheries=1
+      color=darkslategray
+      EPr -> {BR AB DS}
+    }
+    
+    // Management
+    subgraph cluster_management {
+      peripheries=1
+      color=darkslategray
+      //rank=max
+      MP -> {SDp PD MFR MOD AM}
+      AM -> {PAF BP WSI}
+    }
+  }
+  
+  //WP:e -> RC:e [dir=none, constraint=false]
+  
+  
+  // MAIN
+  edge[penwidth=2.5, arrowsize=2, fillcolor=darkslategray]
+  //DR -> WwD -> HC [style="invis"]
+  //DR -> WQ
+  HC:ne -> WwD:s [dir=back]
+  WwD -> WQ
+  //WwD -> {HC WQ} [constraint=false]
+  DR:n -> HC:se
+  DR -> AA [dir=back]
+  HC:e -> WQ -> EF
+  {rank=same; WwD DR}
+  // 生态系统结构、组成、过程和功能
+  EF -> ES -> EPr -> MP -> WQ [constraint=false]
+  //_em1_:e -> WSI:e [ltail='cluster_Service', lhead='cluster_management', constraint=false, penwidth=5, color=gray50]
+  {rank=same; AA MP EPr ES EF} //试过添加隐藏边或 "ordering=out" 的方式未能自定义排序
+  MP -> AA [dir=both, style='dashed', constraint=false]
+  NCc:e -> DR:w [style="invis"]
+}
